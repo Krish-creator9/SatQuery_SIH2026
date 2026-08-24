@@ -75,3 +75,25 @@ export async function getSupportedTasks() {
   if (!response.ok) throw new Error('Failed to fetch tasks');
   return response.json();
 }
+
+/**
+ * Get list of operational scenarios.
+ */
+export async function getScenarios() {
+  const response = await fetch(`${API_BASE}/scenarios/`);
+  if (!response.ok) throw new Error('Failed to fetch scenarios');
+  return response.json();
+}
+
+/**
+ * Load a scenario preset into a session.
+ */
+export async function loadScenario(scenarioId, sessionId = null) {
+  const response = await fetch(`${API_BASE}/scenarios/load`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ scenario_id: scenarioId, session_id: sessionId }),
+  });
+  if (!response.ok) throw new Error('Failed to load scenario');
+  return response.json();
+}

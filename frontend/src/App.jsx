@@ -8,7 +8,7 @@ import AgentExecutionTrace from './components/AgentExecutionTrace.jsx';
 import QueryHistory from './components/QueryHistory.jsx';
 import AboutArchitecture from './components/AboutArchitecture.jsx';
 import GetStartedView from './components/GetStartedView.jsx';
-import { uploadImage, sendQuery, getHealth } from './services/api.js';
+import { uploadImage, sendQuery, getHealth, loadScenario } from './services/api.js';
 
 /**
  * SatQuery AI — Mission Control Application Root
@@ -105,11 +105,28 @@ export default function App() {
   };
 
   // Scenario selection handler
-  const handleSelectScenario = (scenario) => {
+  const handleSelectScenario = async (scenario) => {
     setActiveTab(scenario.mode || 'change');
     setQuery(scenario.defaultQuery);
     setShowNotificationToast(true);
     setTimeout(() => setShowNotificationToast(false), 4000);
+
+    try {
+      const res = await loadScenario(scenario.id);
+      if (res && res.session_id) {
+        setSessionId(res.session_id);
+        if (res.images && res.images.length > 0) {
+          setImages(res.images.map((img, idx) => ({
+            id: `img-${idx}`,
+            filename: img.filename,
+            sizeMb: img.size_mb,
+            metadata: { width: 512, height: 512, format: 'BMP' },
+          })));
+        }
+      }
+    } catch (err) {
+      console.warn('Could not pre-load scenario session:', err);
+    }
   };
 
   // Replay from history
