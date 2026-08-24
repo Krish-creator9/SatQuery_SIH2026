@@ -38,62 +38,53 @@
 
   /* Functional / Status Tokens */
   --color-success: #74f5ff;
-  --color-success-bg: rgba(0, 242, 255, 0.12);
   --color-warning: #fc8f34;
-  --color-warning-bg: rgba(252, 143, 52, 0.12);
   --color-error: #ffb4ab;
   --color-error-container: #93000a;
-  --color-error-bg: rgba(147, 0, 10, 0.25);
 
   /* Typography */
-  --font-headline: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-headline: 'Geist', 'Inter', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-
-  /* Elevation / Glassmorphism */
-  --glass-bg: rgba(22, 27, 40, 0.75);
-  --glass-bg-elevated: rgba(28, 31, 42, 0.85);
-  --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-  --glass-border-cyan: 1px solid rgba(0, 242, 255, 0.3);
-  --glow-cyan: 0 0 15px rgba(0, 242, 255, 0.25);
-  --glow-cyan-lg: 0 0 25px rgba(0, 242, 255, 0.4);
 }
 
 /* Reset & Base */
 *, *::before, *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
-html, body {
-  background-color: var(--color-bg);
-  color: var(--color-on-surface);
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0f131d;
+  color: #dfe2f1;
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-/* Scrollbar styling */
+/* Custom Sleek Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-surface-lowest);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-highest);
-  border-radius: 3px;
+  background: #313540;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-outline-variant);
+  background: #00f2ff66;
 }
 
-/* Material Symbols configuration */
+/* Material Symbols */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
@@ -107,7 +98,7 @@ html, body {
   word-wrap: normal;
   direction: ltr;
   -webkit-font-smoothing: antialiased;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
 }
 
 .material-symbols-outlined.fill {
@@ -116,79 +107,71 @@ html, body {
 
 /* Glassmorphism Panels */
 .glass-panel {
-  background: var(--glass-bg);
+  background-color: rgba(23, 27, 38, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.glass-panel-elevated {
-  background: var(--glass-bg-elevated);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+.glass-panel:hover {
+  border-color: rgba(0, 242, 255, 0.3);
 }
 
-/* Glow Utilities */
+/* Glowing Neon Utilities */
 .glow-cyan {
-  box-shadow: var(--glow-cyan);
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.25);
+}
+
+.glow-active {
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+  border-color: #00f2ff !important;
+}
+
+.glow-hover {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glow-hover:hover {
-  box-shadow: var(--glow-cyan);
-  border-color: var(--color-surface-tint);
+  box-shadow: 0 0 18px rgba(0, 242, 255, 0.35);
+  border-color: #00dbe7 !important;
 }
 
-/* Animated Dashed Stroke for Dropzones */
-@keyframes dashAnimation {
+/* Terminal Highlights */
+.terminal-text {
+  color: #b9cacb;
+}
+.terminal-prefix-info { color: #00dbe7; }
+.terminal-prefix-success { color: #74f5ff; }
+.terminal-prefix-warn { color: #adc6ff; }
+.terminal-prefix-err { color: #ffb4ab; }
+
+/* Micro-Animations */
+@keyframes pulseSlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.04); }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 3s infinite ease-in-out;
+}
+
+@keyframes animatedDash {
   to {
-    stroke-dashoffset: -100;
+    stroke-dashoffset: -40;
   }
 }
 
 .animated-dash {
-  stroke-dasharray: 8 8;
-  animation: dashAnimation 2s linear infinite;
+  stroke-dasharray: 8 6;
+  animation: animatedDash 2.5s linear infinite;
 }
 
-/* Terminal Execution Trace Styles */
-.terminal-container {
-  background: rgba(10, 14, 24, 0.95);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1.6;
+/* Smooth Transitions for interactive elements */
+button, a, input, textarea {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.terminal-prefix-info { color: var(--color-primary-fixed-dim); font-weight: 600; }
-.terminal-prefix-success { color: var(--color-primary-fixed); font-weight: 600; }
-.terminal-prefix-warn { color: var(--color-secondary-fixed-dim); font-weight: 600; }
-.terminal-prefix-exec { color: var(--color-warning); font-weight: 600; }
-.terminal-prefix-error { color: var(--color-error); font-weight: 600; }
-
-/* Custom Animations */
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.05); }
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 2.5s infinite ease-in-out;
-}
-
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(1000%); }
-}
-
-.scanline {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--color-primary-container), transparent);
-  opacity: 0.4;
-  animation: scanline 4s linear infinite;
-  pointer-events: none;
+button:active, a:active {
+  transform: scale(0.97);
 }
