@@ -101,10 +101,7 @@ class ScenarioService:
 
         session_service = SessionService()
         if not session_id or not session_service.get_session(session_id):
-            session = session_service.create_session(user_query=scenario["default_query"])
-            session_id = session.session_id
-        else:
-            session = session_service.get_session(session_id)
+            session_id = session_service.create_session()
 
         session_dir = UPLOAD_DIR / session_id
         session_dir.mkdir(parents=True, exist_ok=True)
