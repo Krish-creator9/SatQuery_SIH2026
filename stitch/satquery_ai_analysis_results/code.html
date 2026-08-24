@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SatQuery AI - Change Detection Results</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Assuming Geist is available locally or via a different CDN in the real environment, falling back to Inter if not to prevent layout breakage, but configuring Tailwind to use it as requested -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#00363a",
+                    "surface-container-highest": "#313540",
+                    "secondary": "#adc6ff",
+                    "primary-container": "#00f2ff",
+                    "tertiary": "#f7f6ff",
+                    "on-primary-container": "#006a71",
+                    "primary": "#e1fdff",
+                    "inverse-primary": "#00696f",
+                    "on-secondary-container": "#e6ecff",
+                    "error-container": "#93000a",
+                    "secondary-fixed": "#d8e2ff",
+                    "surface-container-lowest": "#0a0e18",
+                    "surface-dim": "#0f131d",
+                    "surface-tint": "#00dbe7",
+                    "surface-container": "#1c1f2a",
+                    "surface-variant": "#313540",
+                    "surface": "#0f131d",
+                    "on-secondary-fixed": "#001a42",
+                    "on-secondary": "#002e6a",
+                    "inverse-surface": "#dfe2f1",
+                    "on-tertiary-container": "#5a5f6f",
+                    "on-tertiary-fixed-variant": "#424655",
+                    "on-surface-variant": "#b9cacb",
+                    "primary-fixed-dim": "#00dbe7",
+                    "on-tertiary": "#2b303e",
+                    "tertiary-fixed-dim": "#c2c6d8",
+                    "outline-variant": "#3a494b",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#353944",
+                    "on-error": "#690005",
+                    "tertiary-container": "#d6daec",
+                    "on-tertiary-fixed": "#161b28",
+                    "error": "#ffb4ab",
+                    "tertiary-fixed": "#dee2f4",
+                    "on-primary-fixed-variant": "#004f54",
+                    "outline": "#849495",
+                    "surface-container-low": "#171b26",
+                    "background": "#0f131d",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "on-surface": "#dfe2f1",
+                    "on-secondary-fixed-variant": "#004395",
+                    "primary-fixed": "#74f5ff",
+                    "inverse-on-surface": "#2c303b",
+                    "on-primary-fixed": "#002022",
+                    "surface-container-high": "#262a35",
+                    "secondary-container": "#0566d9",
+                    "on-background": "#dfe2f1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "margin-desktop": "32px",
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "xl": "40px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist", "sans-serif"],
+                    "data-mono-lg": ["JetBrains Mono", "monospace"],
+                    "headline-lg": ["Geist", "sans-serif"],
+                    "headline-sm": ["Geist", "sans-serif"],
+                    "label-mono": ["JetBrains Mono", "monospace"],
+                    "headline-lg-mobile": ["Geist", "sans-serif"],
+                    "body-lg": ["Inter", "sans-serif"],
+                    "body-md": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "data-mono-lg": ["14px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "label-mono": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); overflow: hidden; }
+        .glass-panel { background: rgba(23, 27, 38, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glow-accent { box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); }
+        
+        /* Custom scrollbar for a tech feel */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: theme('colors.surface-variant'); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.outline'); }
+    </style>
+</head>
+<body class="flex h-screen font-body-md antialiased">
+<!-- SideNavBar (Shared Component) -->
+<nav class="bg-surface-container-low/80 backdrop-blur-md text-primary-fixed-dim font-label-mono text-label-mono shadow-xl border-r border-white/10 fixed left-0 top-0 h-full flex flex-col z-40 w-[320px]">
+<div class="p-lg border-b border-white/10 flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border border-outline/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="robot_2" data-weight="fill">robot_2</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm text-primary">SatQuery AI</h1>
+<p class="text-on-surface-variant opacity-80">Mission Control</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-md flex flex-col gap-xs px-sm">
+<!-- Inactive Tab: Single Image -->
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="image">image</span>
+<span>Single Image</span>
+</a>
+<!-- Active Tab: Change Detection -->
+<a class="bg-secondary-container/30 text-primary-container border-l-4 border-primary-container px-md py-sm flex items-center gap-md rounded-r-lg glow-accent" href="#">
+<span class="material-symbols-outlined" data-icon="compare">compare</span>
+<span>Change Detection</span>
+</a>
+<!-- Inactive Tab: Optical + SAR Fusion -->
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+<span>Optical + SAR Fusion</span>
+</a>
+</div>
+<div class="p-sm border-t border-white/10 flex flex-col gap-xs mt-auto">
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span>History</span>
+</a>
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span>Audit Logs</span>
+</a>
+</div>
+</nav>
+<!-- Main Workspace Area -->
+<main class="ml-[320px] flex-1 flex flex-col h-screen overflow-hidden relative z-0">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface/70 backdrop-blur-xl text-primary font-headline-sm text-headline-sm shadow-sm border-b border-white/10 flex justify-between items-center px-lg py-sm w-full sticky top-0 z-50">
+<div class="font-headline-md text-headline-md font-bold text-primary-fixed-dim tracking-tight">
+<!-- Brand logo hidden here per typical layout, using side nav for identity, but keeping structure per JSON if needed. Let's show query ID instead to fit context -->
+<span class="font-data-mono-lg text-data-mono-lg text-on-surface-variant">QRY-8842-CD</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer active:scale-95 w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/30">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer active:scale-95 w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/30">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Content Grid Layout -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Center Canvas (Image Viewer & AI Result) -->
+<section class="flex-1 flex flex-col p-lg gap-lg relative overflow-y-auto">
+<!-- Interactive Image Viewer Container -->
+<div class="relative w-full h-[563px] rounded-xl overflow-hidden glass-panel flex flex-col">
+<!-- Image Header/Toolbar -->
+<div class="h-12 border-b border-white/10 bg-surface/50 flex items-center justify-between px-md shrink-0">
+<div class="flex items-center gap-sm text-on-surface-variant font-label-mono text-label-mono">
+<span class="material-symbols-outlined text-[16px]" data-icon="satellite_alt">satellite_alt</span>
+<span>S2A_MSIL2A_20231024T103111</span>
+<span class="text-outline mx-2">|</span>
+<span>Target: NW Quadrant</span>
+</div>
+<!-- Change Mask Toggle -->
+<div class="flex items-center gap-sm">
+<span class="text-on-surface font-label-mono text-label-mono">Change Mask</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-error-container"></div>
+</label>
+</div>
+</div>
+<!-- The Imagery -->
+<div class="flex-1 relative bg-black">
+<img class="w-full h-full object-cover opacity-80" data-alt="High-resolution satellite imagery of a sprawling urban landscape viewed from space. The scene is rendered in deep, sophisticated tones of navy and charcoal, with contrasting bright, glowing neon red and cyan lines overlaying new industrial structures in the northwest quadrant, highlighting urban expansion. The aesthetic is highly technical, resembling a futuristic mission control interface." data-location="Seattle Industrial Zone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2MD0YQ2TbuBfXSSgtrbrcstPRqANUymLRS1KO2KMPQ0wRRFBU5JD_x1-elSa-e5XqFeKP8r0p2h26jWklPLZI7ocQqy6qJ7DHQPvlvJXD6QIit7t1UGuQoFGvHe1YdnzYK4upGWL45wyt8NEA4NfYB7o3dW9wlkHOfdwpQoi9tgz92Wz8OYyNrn4iLP1nyDDCgQFfDQ1PBFH6_GCd-R2z3gw3BfgkyzUVhTw6lobFKyaryVQo3GJv"/>
+<!-- Overlay UI elements (Crosshairs, scale) -->
+<div class="absolute inset-0 pointer-events-none">
+<div class="absolute top-1/2 left-0 w-full h-[1px] bg-white/10"></div>
+<div class="absolute left-1/2 top-0 w-[1px] h-full bg-white/10"></div>
+<div class="absolute bottom-md right-md bg-surface-container/80 backdrop-blur font-data-mono-lg text-[10px] px-2 py-1 rounded text-on-surface-variant border border-white/10">
+                                SCALE 1:5000
+                            </div>
+</div>
+</div>
+</div>
+<!-- AI Output Card -->
+<div class="glass-panel rounded-xl p-lg flex flex-col gap-md relative overflow-hidden">
+<!-- Subtle gradient bg effect for the card -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="memory">memory</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Analysis Complete</h2>
+</div>
+<!-- Confidence Badge -->
+<div class="bg-primary-container/20 border border-primary-container/50 text-primary-container px-sm py-xs rounded-full flex items-center gap-xs font-label-mono text-label-mono glow-accent">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                            92% Confidence
+                        </div>
+</div>
+<div class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed bg-surface-container-highest/30 p-md rounded-lg border border-white/5">
+                        "Significant urban expansion detected in the northwest quadrant (<span class="text-primary-fixed-dim font-bold">+12%</span>). Several new structures identified as industrial warehouses based on spatial footprint and multi-spectral signature analysis against baseline imagery from T-6 months."
+                    </div>
+<div class="flex gap-sm mt-sm">
+<button class="bg-surface-bright hover:bg-outline-variant text-on-surface px-md py-sm rounded-lg font-label-mono text-label-mono transition-colors border border-white/10 flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="download">download</span> Export Report
+                        </button>
+<button class="bg-surface-bright hover:bg-outline-variant text-on-surface px-md py-sm rounded-lg font-label-mono text-label-mono transition-colors border border-white/10 flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="share">share</span> Share Finding
+                        </button>
+</div>
+</div>
+<!-- Collapsible History Panel (Bottom Left) -->
+<div class="absolute bottom-lg left-lg w-[340px] glass-panel rounded-xl flex flex-col shadow-2xl transition-all duration-300 transform translate-y-0" id="history-panel">
+<div class="p-sm px-md border-b border-white/10 flex justify-between items-center bg-surface-container-low/50 rounded-t-xl cursor-pointer" onclick="document.getElementById('history-content').classList.toggle('hidden')">
+<span class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="history">history</span> Recent Queries
+                        </span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]" data-icon="expand_more">expand_more</span>
+</div>
+<div class="p-sm flex flex-col gap-sm max-h-[200px] overflow-y-auto" id="history-content">
+<!-- History Item 1 -->
+<div class="bg-surface-container/50 p-sm rounded border border-white/5 flex gap-sm hover:bg-surface-variant/50 transition-colors cursor-pointer">
+<div class="w-12 h-12 rounded bg-surface-container-highest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover opacity-70" data-alt="Small thumbnail of satellite imagery showing a coastal port facility with deep blue waters and concrete docks, modern UI glassmorphic aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzODgWOGLWv_rbX7aGnmJF7CdTnzxagpaFZY4g6ENqkzLHxOTdOm_1XG2gjZP3WiYkkhp-mcfPNa1zdX9vROUz_n3Ae3mPlydKDfmqKVa54D2ziXxoIrw1hm5xZzSuBoYj5SS3Mo6BdsdFAr4q_MUuojppMPNkvYXTA-QdXdJRTwGW16HLCs2aEFMtE1IntVTc_ggk_GXMy_MS2VzoRH7INlBCmi2k9F8c8ySiB0HYjMO-Sk5X86oR"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="font-label-mono text-[10px] text-primary-fixed-dim">Port Monitoring</span>
+<span class="font-body-md text-[12px] text-on-surface-variant line-clamp-1">Vessel count baseline diff</span>
+</div>
+</div>
+<!-- History Item 2 -->
+<div class="bg-surface-container/50 p-sm rounded border border-white/5 flex gap-sm hover:bg-surface-variant/50 transition-colors cursor-pointer">
+<div class="w-12 h-12 rounded bg-surface-container-highest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover opacity-70" data-alt="Small thumbnail of satellite imagery showing dense forest canopy in infrared false color, vibrant red against dark terrain, modern UI glassmorphic aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR_Mqobt17x3_CwNPjti68rxK8EnZKY6x3KWsI7_H_o2ZLZI4tVi2t2iVquvStBJZNwPpYseKBpc9ECG0mpxK5gdwxxlj07DUcicBt7QRPfO95oTrn3z0lQpYkcHhHi-39DNFoBSbgVC7862Gghe_pG72J8I24cihFXtGowj0D3WSuE2p8fkpnCCpYNFCBXX1a9GoQxgFFazp39CWesDtd3FZODKGB1jgDIsMYLwDde2eF9pWEKgG3"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="font-label-mono text-[10px] text-primary-fixed-dim">Deforestation Alert</span>
+<span class="font-body-md text-[12px] text-on-surface-variant line-clamp-1">Sector 7G canopy loss</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Agent Execution Trace -->
+<aside class="w-[340px] glass-panel border-l-0 border-r-0 border-b-0 border-t-0 border-white/10 flex flex-col z-10 shadow-[-10px_0_20px_rgba(0,0,0,0.2)]">
+<div class="p-md border-b border-white/10 bg-surface-container-low/80 flex items-center justify-between shrink-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Agent Trace</h3>
+<span class="bg-surface-bright text-on-surface-variant font-data-mono-lg text-[10px] px-2 py-0.5 rounded border border-white/10">v2.4.1-diff</span>
+</div>
+<div class="flex-1 overflow-y-auto p-md pl-lg relative">
+<!-- Vertical Timeline Line -->
+<div class="absolute left-[35px] top-lg bottom-lg w-[1px] bg-outline/20"></div>
+<div class="flex flex-col gap-lg relative">
+<!-- Step 1: Complete -->
+<div class="flex gap-md relative">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 z-10 glow-accent shadow-lg ring-4 ring-background">
+<span class="material-symbols-outlined text-[14px]" data-icon="check" data-weight="fill">check</span>
+</div>
+<div class="flex flex-col pb-sm">
+<span class="font-label-mono text-label-mono text-on-surface">Query Parsed</span>
+<span class="font-body-md text-[12px] text-on-surface-variant mt-xs">Extracted intent: Area Change Detection. Target: Polygon ID-NW44.</span>
+<span class="font-data-mono-lg text-[10px] text-outline mt-1">0.12s</span>
+</div>
+</div>
+<!-- Step 2: Complete -->
+<div class="flex gap-md relative">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 z-10 glow-accent shadow-lg ring-4 ring-background">
+<span class="material-symbols-outlined text-[14px]" data-icon="check" data-weight="fill">check</span>
+</div>
+<div class="flex flex-col pb-sm">
+<span class="font-label-mono text-label-mono text-on-surface">Data Retrieval</span>
+<span class="font-body-md text-[12px] text-on-surface-variant mt-xs">Fetched baseline imagery (T-6m) and current acquisition (T-0). Coregistration applied.</span>
+<span class="font-data-mono-lg text-[10px] text-outline mt-1">1.45s</span>
+</div>
+</div>
+<!-- Step 3: Complete -->
+<div class="flex gap-md relative">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 z-10 glow-accent shadow-lg ring-4 ring-background">
+<span class="material-symbols-outlined text-[14px]" data-icon="check" data-weight="fill">check</span>
+</div>
+<div class="flex flex-col pb-sm">
+<span class="font-label-mono text-label-mono text-on-surface">Model Execution</span>
+<span class="font-body-md text-[12px] text-on-surface-variant mt-xs">Running specialized UrbanDiff-v3 tensor model across spatial bounds.</span>
+<!-- Sub-process log -->
+<div class="bg-surface-container-highest/50 rounded p-2 mt-2 border border-white/5 font-data-mono-lg text-[10px] text-outline-variant flex flex-col gap-1">
+<div><span class="text-secondary-fixed-dim">[INFO]</span> Batching tensors (4/4)</div>
+<div><span class="text-secondary-fixed-dim">[INFO]</span> Mask generation complete</div>
+</div>
+<span class="font-data-mono-lg text-[10px] text-outline mt-1">4.20s</span>
+</div>
+</div>
+<!-- Step 4: Complete (Current Final) -->
+<div class="flex gap-md relative">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 z-10 glow-accent shadow-lg ring-4 ring-background">
+<span class="material-symbols-outlined text-[14px]" data-icon="check" data-weight="fill">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-mono text-label-mono text-primary-fixed">Synthesis &amp; Output</span>
+<span class="font-body-md text-[12px] text-on-surface-variant mt-xs">Generated natural language summary and confidence metrics based on spatial heuristics.</span>
+<span class="font-data-mono-lg text-[10px] text-outline mt-1">0.85s</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-md border-t border-white/10 bg-surface-container-low/50">
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono text-[10px]">
+<span>TOTAL EXECUTION TIME</span>
+<span class="text-primary-fixed-dim font-bold">6.62s</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SatQuery AI - Scenario Selector</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#00f2ff",
+                    "surface-container-lowest": "#0a0e18",
+                    "surface-container-high": "#262a35",
+                    "surface-tint": "#00dbe7",
+                    "on-tertiary": "#2b303e",
+                    "on-primary-container": "#006a71",
+                    "primary-fixed": "#74f5ff",
+                    "on-surface": "#dfe2f1",
+                    "tertiary-fixed": "#dee2f4",
+                    "on-tertiary-fixed": "#161b28",
+                    "on-secondary-fixed-variant": "#004395",
+                    "surface-dim": "#0f131d",
+                    "primary": "#e1fdff",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed-variant": "#004f54",
+                    "on-secondary-fixed": "#001a42",
+                    "surface-container-low": "#171b26",
+                    "primary-fixed-dim": "#00dbe7",
+                    "on-error": "#690005",
+                    "on-primary-fixed": "#002022",
+                    "on-secondary": "#002e6a",
+                    "surface-bright": "#353944",
+                    "background": "#0f131d",
+                    "surface": "#0f131d",
+                    "secondary-container": "#0566d9",
+                    "on-primary": "#00363a",
+                    "on-surface-variant": "#b9cacb",
+                    "tertiary-fixed-dim": "#c2c6d8",
+                    "outline-variant": "#3a494b",
+                    "on-secondary-container": "#e6ecff",
+                    "tertiary": "#f7f6ff",
+                    "tertiary-container": "#d6daec",
+                    "outline": "#849495",
+                    "secondary": "#adc6ff",
+                    "on-error-container": "#ffdad6",
+                    "inverse-primary": "#00696f",
+                    "on-background": "#dfe2f1",
+                    "surface-variant": "#313540",
+                    "surface-container-highest": "#313540",
+                    "error-container": "#93000a",
+                    "inverse-surface": "#dfe2f1",
+                    "surface-container": "#1c1f2a",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "on-tertiary-fixed-variant": "#424655",
+                    "inverse-on-surface": "#2c303b",
+                    "secondary-fixed": "#d8e2ff",
+                    "on-tertiary-container": "#5a5f6f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "xl": "40px",
+                    "xs": "4px",
+                    "margin-desktop": "32px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "margin-mobile": "16px",
+                    "unit": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "data-mono-lg": ["JetBrains Mono"],
+                    "label-mono": ["JetBrains Mono"],
+                    "headline-sm": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["26px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "data-mono-lg": ["14px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "label-mono": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 14, 24, 0.5); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(132, 148, 149, 0.3); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 242, 255, 0.5); 
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface h-screen w-full flex overflow-hidden font-body-md selection:bg-primary-container/30 selection:text-primary">
+<!-- JSON Component: SideNavBar -->
+<nav class="hidden md:flex flex-col z-40 bg-surface-container-low/80 backdrop-blur-md border-r border-white/10 shadow-xl fixed left-0 top-0 h-full w-[320px]">
+<!-- Header -->
+<div class="px-lg py-lg border-b border-white/10 flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A stylized, high-tech avatar for a system agent, featuring glowing cyan circuits and geometric shapes against a deep dark background, representing an AI assistant in a geospatial mission control environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQYGrYGC-q7VorTd80ESg9--RVuTRdS3n_Hyf5YF4Z2t-_QKD5YtnNemnmRN7cbQ6sd4Ex1EhuW9a1CprTdC4AYqyaw8lwOIxhy7PthXkD6g6-NneAplf318oK708PZ19C3J_eXNUpIVG8qeGXJufMbh8A72N_aGA0_P4Sc_znZ4LkxGAGGHQihT-RVgYqjv7gb_wTbdP6NRBpy_ktyhasoiUDJPLS5s_CZ7Q0Km9M9MTmplqNgErs"/>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm text-primary tracking-tight">SatQuery AI</h1>
+<p class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-wider">Mission Control</p>
+</div>
+</div>
+<!-- Primary Tabs -->
+<div class="flex-1 overflow-y-auto py-md px-sm space-y-sm">
+<!-- Note: Semantic matching - Scenario Selector doesn't match perfectly, leaving them as inactive according to rules -->
+<button class="w-full text-on-surface-variant px-md py-sm flex items-center gap-md rounded-lg hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 cursor-pointer font-label-mono text-label-mono">
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">image</span>
+                Single Image
+            </button>
+<button class="w-full text-on-surface-variant px-md py-sm flex items-center gap-md rounded-lg hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 cursor-pointer font-label-mono text-label-mono">
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">compare</span>
+                Change Detection
+            </button>
+<button class="w-full text-on-surface-variant px-md py-sm flex items-center gap-md rounded-lg hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 cursor-pointer font-label-mono text-label-mono">
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">layers</span>
+                Optical + SAR Fusion
+            </button>
+</div>
+<!-- Footer Tabs -->
+<div class="p-sm border-t border-white/10 space-y-sm">
+<button class="w-full text-on-surface-variant px-md py-sm flex items-center gap-md rounded-lg hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 cursor-pointer font-label-mono text-label-mono">
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">history</span>
+                History
+            </button>
+<button class="w-full text-on-surface-variant px-md py-sm flex items-center gap-md rounded-lg hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 cursor-pointer font-label-mono text-label-mono">
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">terminal</span>
+                Audit Logs
+            </button>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<main class="flex-1 flex flex-col h-full w-full md:ml-[320px] relative overflow-hidden">
+<!-- JSON Component: TopNavBar -->
+<header class="flex justify-between items-center px-lg py-sm w-full sticky top-0 z-50 bg-surface/70 backdrop-blur-xl border-b border-white/10 shadow-sm">
+<div class="flex items-center gap-md">
+<!-- Mobile Menu Trigger (Visible only on mobile) -->
+<button class="md:hidden text-on-surface-variant hover:text-primary-container transition-colors">
+<span aria-hidden="true" class="material-symbols-outlined">menu</span>
+</button>
+<div class="font-headline-md text-headline-md font-bold text-primary-fixed-dim tracking-tight">SatQuery AI</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer active:scale-95 w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50">
+<span aria-hidden="true" class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer active:scale-95 w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50">
+<span aria-hidden="true" class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Page Content Canvas -->
+<div class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop flex flex-col">
+<!-- Context Header -->
+<div class="max-w-5xl mx-auto w-full mb-xl">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-sm">Select Mission Scenario</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    Choose a primary operational context. This selection will pre-configure the AI agent's baseline models, relevant data sources, and analytical tools for your session.
+                </p>
+</div>
+<!-- Scenarios Grid (Bento/Card Layout) -->
+<div class="max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-lg h-full pb-xl">
+<!-- Card 1: Disaster Response -->
+<div class="group relative rounded-xl overflow-hidden bg-surface-container-low border border-white/10 flex flex-col glow-hover transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+<!-- Background Image Layer -->
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity duration-500 blur-[2px] group-hover:blur-0" data-alt="A high-altitude satellite view of a massive river flood affecting a coastal city, rendered in a moody, high-contrast style. The floodwaters are depicted in deep, murky teal tones, contrasting sharply with the geometric grid of the dark urban infrastructure. The overall color palette leans heavily into deep space blacks, muted cyans, and occasional stark white highlights representing emergency response lights or reflections, evoking a serious, technical mission-control atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCuF3_Zssdungnk3yUE_0L9AhPnZFuJ_jo7XEd-61DuXNvuOYa52CNz5L7CMPp4_bpXX_dIrXI0xKXlMr77TAWS4YzxIBb0ezPM0Vf426C84C6kKlTj1uvudQGnIZhHI2AgG3NEIb-3wNR0K7VBMAldd_UW7TEqhziEoj_ag_2O62Qx7SBzDDQBZaq3XWCUxhy4jXb82RVV_vx7WSd0x5Q6MGunubYlQ0wleY9NNHtKGnVJsowfIOuK')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-low/80 to-transparent"></div>
+</div>
+<!-- Content Layer -->
+<div class="relative z-10 p-lg flex flex-col h-full">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high/50 border border-white/10 flex items-center justify-center mb-md group-hover:border-primary-container transition-colors backdrop-blur-md">
+<span aria-hidden="true" class="material-symbols-outlined text-[28px] text-on-surface-variant group-hover:text-primary-container transition-colors" style="font-variation-settings: 'FILL' 1;">water_damage</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-xs">Disaster Response</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg flex-1">
+                            Rapid assessment of flood extents, infrastructure damage, and optimal resource allocation routing.
+                        </p>
+<div class="space-y-sm mt-auto">
+<div class="text-xs uppercase tracking-widest text-outline-variant font-label-mono mb-xs">Suggested Queries</div>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-surface-variant/40 border border-white/5 text-on-surface hover:border-primary/50 hover:bg-primary/10 rounded-full px-3 py-1 font-label-mono text-[11px] backdrop-blur-sm transition-colors">Show flooded roads</span>
+<span class="bg-surface-variant/40 border border-white/5 text-on-surface hover:border-primary/50 hover:bg-primary/10 rounded-full px-3 py-1 font-label-mono text-[11px] backdrop-blur-sm transition-colors">Assess building damage</span>
+<span class="bg-surface-variant/40 border border-white/5 text-on-surface hover:border-primary/50 hover:bg-primary/10 rounded-full px-3 py-1 font-label-mono text-[11px] backdrop-blur-sm transition-colors">Find safe zones</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Agriculture Monitoring -->
+<div class="group relative rounded-xl overflow-hidden bg-surface-container-low border border-white/10 flex flex-col glow-hover transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity duration-500 blur-[2px] group-hover:blur-0" data-alt="A synthetic aperture radar or false-color satellite image of vast agricultural fields stretching to the horizon. The fields are segmented into precise geometric blocks, glowing with vibrant, luminous cyan and tech-blue hues against a pitch-black background to represent crop health data (NDVI). The aesthetic is highly technical and futuristic, resembling a glowing digital grid map used in advanced geospatial intelligence platforms, emphasizing precision and scientific rigor." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD85e7knO2UVkLhaZDcFt_tZgOSaSkuRp7Cal9bwYZbBZLx8UMPu2vJf5uUR9QtmCIdQk__k95vis5yFQN0FseOCxH6LIQsD_UACbbtBJO7DeQ_A0di0vgep1Qwup_FsJQPC0F1EqfoMuWP6aj8vxJzHkPKrHuvQ11km2KW4cMjYE_dOEF9kxKqQWb2TCKYizKIPTCyrwISInnAVd-0m3aHwoRpt8Lqu_UukNJYbEt9iSzdf3_R4pok')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-low/80 to-transparent"></div>
+</div>
+<div class="relative z-10 p-lg flex flex-col h-full">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high/50 border border-white/10 flex items-center justify-center mb-md group-hover:border-primary-container transition-colors backdrop-blur-md">
+<span aria-hidden="true" class="material-symbols-outlined text-[28px] text-on-surface-variant group-hover:text-primary-container transition-colors" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-xs">Agriculture Monitoring</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg flex-1">
+                            Track crop health, predict yield variations, and monitor irrigation levels across vast regions.
+                        </p>
+<div class="space-y-sm mt-auto">
+<div class="text-xs uppercase tracking-widest text-outline-variant font-label-mono mb-xs">Suggested Queries</div>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-surface-variant/40 border border-white/5 text-on-surface hover:border-primary/50 hover:bg-primary/10 rounded-full px-3 py-1 font-label-mono text-[11px] backdrop-blur-sm transition-colors">NDVI anomalies</span>
+<span class="bg-surface-variant/40 border border-white/5 text-on-surface hover:border-primary/50 hover:bg-primary/10 rounded-full px-3 py-1 font-label-mono text-[11px] backdrop-blur-sm transition-colors">Water stress areas</span>
+<span class="bg-surface-variant/40 border border-white/5 text-on-surface hover:border-primary/50 hover:bg-primary/10 rounded-full px-3 py-1 font-label-mono text-[11px] backdrop-blur-sm transition-colors">Crop classification</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Urban Expansion -->
+<div class="group relative rounded-xl overflow-hidden bg-surface-container-low border border-white/10 flex flex-col glow-hover transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center opacity-30 group-hover:opacity-50 transition-opacity duration-500 blur-[2px] group-hover:blur-0" data-alt="A nighttime satellite reconnaissance image of a sprawling metropolis expanding into surrounding dark wilderness. The city lights are rendered not as standard yellow, but as intricate networks of glowing electric blue and stark white, creating a glassmorphic, high-tech vibe. The dense urban core fades into complex, sprawling tendrils of light, set against an abyss of deep surface-container-lowest black, perfectly capturing the aesthetic of a modern, data-driven intelligence dashboard." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDnln1IqIZwO-46I_uGOgqt4bSI_lVkvfnmL3Xd8bawKq4CTykjy-XS4QublnP3xymLc-0YIfLWG2IfZ29u1nxPFdiTu4RNN-8IYYt_DGMBekThcJ6m2TOMcruaJWDRBchvvi7t9bYcwfRYjEnd5IZBQhsI1DObehMpH3q-t0ffrpszlFxy46Nmt40QLveJ0oKKgdtx4gNbO7iw_nmAnLcbX9kJbBN-j7jopIIT1CDrgUtjUEm_hTlI')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-low/80 to-transparent"></div>
+</div>
+<div class="relative z-10 p-lg flex flex-col h-full">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high/50 border border-white/10 flex items-center justify-center mb-md group-hover:border-primary-container transition-colors backdrop-blur-md">
+<span aria-hidden="true" class="material-symbols-outlined text-[28px] text-on-surface-variant group-hover:text-primary-container transition-colors" style="font-variation-settings: 'FILL' 1;">location_city</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-xs">Urban Expansion</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg flex-1">
+                            Analyze sprawl, detect informal settlements, and track structural changes over multi-year periods.
+                        </p>
+<div class="space-y-sm mt-auto">
+<div class="text-xs uppercase tracking-widest text-outline-variant font-label-mono mb-xs">Suggested Queries</div>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-surface-variant/40 border border-white/5 text-on-surface hover:border-primary/50 hover:bg-primary/10 rounded-full px-3 py-1 font-label-mono text-[11px] backdrop-blur-sm transition-colors">New construction 2023</span>
+<span class="bg-surface-variant/40 border border-white/5 text-on-surface hover:border-primary/50 hover:bg-primary/10 rounded-full px-3 py-1 font-label-mono text-[11px] backdrop-blur-sm transition-colors">Deforestation vs Urban</span>
+<span class="bg-surface-variant/40 border border-white/5 text-on-surface hover:border-primary/50 hover:bg-primary/10 rounded-full px-3 py-1 font-label-mono text-[11px] backdrop-blur-sm transition-colors">Road network growth</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

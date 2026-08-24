@@ -1,0 +1,316 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SatQuery AI - Evidence Report</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600&amp;family=Inter:wght@400&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#00f2ff",
+                    "surface-container-lowest": "#0a0e18",
+                    "surface-container-high": "#262a35",
+                    "surface-tint": "#00dbe7",
+                    "on-tertiary": "#2b303e",
+                    "on-primary-container": "#006a71",
+                    "primary-fixed": "#74f5ff",
+                    "on-surface": "#dfe2f1",
+                    "tertiary-fixed": "#dee2f4",
+                    "on-tertiary-fixed": "#161b28",
+                    "on-secondary-fixed-variant": "#004395",
+                    "surface-dim": "#0f131d",
+                    "primary": "#e1fdff",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed-variant": "#004f54",
+                    "on-secondary-fixed": "#001a42",
+                    "surface-container-low": "#171b26",
+                    "primary-fixed-dim": "#00dbe7",
+                    "on-error": "#690005",
+                    "on-primary-fixed": "#002022",
+                    "on-secondary": "#002e6a",
+                    "surface-bright": "#353944",
+                    "background": "#0f131d",
+                    "surface": "#0f131d",
+                    "secondary-container": "#0566d9",
+                    "on-primary": "#00363a",
+                    "on-surface-variant": "#b9cacb",
+                    "tertiary-fixed-dim": "#c2c6d8",
+                    "outline-variant": "#3a494b",
+                    "on-secondary-container": "#e6ecff",
+                    "tertiary": "#f7f6ff",
+                    "tertiary-container": "#d6daec",
+                    "outline": "#849495",
+                    "secondary": "#adc6ff",
+                    "on-error-container": "#ffdad6",
+                    "inverse-primary": "#00696f",
+                    "on-background": "#dfe2f1",
+                    "surface-variant": "#313540",
+                    "surface-container-highest": "#313540",
+                    "error-container": "#93000a",
+                    "inverse-surface": "#dfe2f1",
+                    "surface-container": "#1c1f2a",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "on-tertiary-fixed-variant": "#424655",
+                    "inverse-on-surface": "#2c303b",
+                    "secondary-fixed": "#d8e2ff",
+                    "on-tertiary-container": "#5a5f6f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "xl": "40px",
+                    "xs": "4px",
+                    "margin-desktop": "32px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "margin-mobile": "16px",
+                    "unit": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "data-mono-lg": ["JetBrains Mono"],
+                    "label-mono": ["JetBrains Mono"],
+                    "headline-sm": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["26px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "data-mono-lg": ["14px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "label-mono": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        .glass-panel {
+            background-color: rgba(22, 27, 40, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar (from JSON) -->
+<nav class="bg-surface-container-low/80 backdrop-blur-md text-primary-fixed-dim font-label-mono text-label-mono docked left-0 h-screen w-[320px] border-r border-white/10 shadow-xl fixed flex flex-col z-40"><!-- Header -->
+<div class="p-lg border-b border-white/10 flex items-center gap-md">
+  <img alt="System Agent" class="w-10 h-10 rounded-full border border-primary-container/30 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgFuLfu___GRttTTnNSc6gsdXEVaaOSaw7-acaxAziEbtEm1W2tCvpTammy6NYspGj6i49vchEko3iEOQRrkYyef4K5JCL40Qodx3ip16mHbES7dHdKl7V3FL3z3yf9Kw_2NMl93h36o_ko3I44UjNuP0oE4nStSkRjHS1iS1cD5AwH3xMMn0uE9TPKbBlRouIUk2GbLUt1-WRfdyHMBogC1A2wwUGQ2L1XOoAUXM9w0dzj_ND778p">
+  <div>
+    <h1 class="font-headline-sm text-headline-sm text-primary tracking-tight">SatQuery AI</h1>
+    <p class="text-on-surface-variant font-body-md text-body-md">Mission Control</p>
+  </div>
+</div>
+<!-- Main Navigation -->
+<div class="flex-1 overflow-y-auto py-md flex flex-col gap-xs">
+  <a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_11}}">
+    <span class="material-symbols-outlined text-[20px]">home</span>
+    Home
+  </a>
+  <a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_5}}">
+    <span class="material-symbols-outlined text-[20px]">grid_view</span>
+    Scenarios
+  </a>
+  <a class="bg-secondary-container/30 text-primary-container border-l-4 border-primary-container px-md py-sm flex items-center gap-md active:translate-x-1 transition-transform" href="{{DATA:SCREEN:SCREEN_7}}">
+    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">description</span>
+    Evidence Report
+  </a>
+  <a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_6}}">
+    <span class="material-symbols-outlined text-[20px]">account_tree</span>
+    Agent Trace
+  </a>
+</div>
+<!-- Footer Navigation -->
+<div class="border-t border-white/10 p-md flex flex-col gap-xs">
+  <a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_4}}">
+    <span class="material-symbols-outlined text-[20px]">history</span>
+    History
+  </a>
+  <a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_2}}">
+    <span class="material-symbols-outlined text-[20px]">info</span>
+    About
+  </a>
+  <a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="#">
+    <span class="material-symbols-outlined text-[20px]">terminal</span>
+    Audit Logs
+  </a>
+</div></nav>
+<!-- Main Content Canvas -->
+<main class="ml-[320px] flex-1 min-h-screen p-margin-desktop bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-surface-container/40 via-background to-background">
+<div class="max-w-6xl mx-auto space-y-lg">
+<!-- Header Section -->
+<header class="flex justify-between items-end border-b border-white/10 pb-md">
+<div>
+<div class="font-label-mono text-label-mono text-primary-container mb-xs uppercase tracking-widest">Report ID: SQ-8472-A</div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Intelligence Evidence Report</h2>
+</div>
+<button class="bg-secondary-container hover:bg-secondary-container/80 text-on-secondary-container px-lg py-sm rounded-lg flex items-center gap-sm transition-colors border border-primary-container/30 shadow-[0_0_15px_rgba(0,242,255,0.1)] hover:shadow-[0_0_15px_rgba(0,242,255,0.3)]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+<span class="font-data-mono-lg text-data-mono-lg">Download Report</span>
+</button>
+</header>
+<!-- Summary & Warning Stack -->
+<div class="grid grid-cols-1 gap-md">
+<!-- Answer Summary -->
+<div class="glass-panel rounded-xl p-lg flex flex-col md:flex-row justify-between items-start gap-lg border-l-4 border-l-primary-container">
+<div class="max-w-3xl">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container">psychology</span>
+                            Analyst Summary
+                        </h3>
+<p class="font-body-lg text-body-lg text-on-surface">
+                            Based on cross-modal satellite imagery analysis spanning the requested temporal window, there is high probability of recent structural development at the target coordinates. SAR backscatter signatures corroborate optical anomalies observed in the vegetation indices.
+                        </p>
+</div>
+<div class="shrink-0 bg-surface-container-low rounded-lg p-md border border-white/5 flex flex-col items-center justify-center min-w-[140px]">
+<div class="font-label-mono text-label-mono text-on-surface-variant mb-xs uppercase">Confidence</div>
+<div class="font-headline-lg text-headline-lg text-primary-container">87.4%</div>
+<div class="font-label-mono text-label-mono text-primary-container mt-xs bg-primary-container/10 px-sm py-xs rounded-full">HIGH</div>
+</div>
+</div>
+<!-- Warnings Callout -->
+<div class="bg-error-container/20 border border-error/30 rounded-xl p-md flex items-start gap-md">
+<span class="material-symbols-outlined text-error mt-xs" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-error mb-xs">Insufficient Temporal Granularity</h4>
+<p class="font-body-md text-body-md text-on-error-container">
+                            Cloud cover obscured the target sector on D-3 and D-2. The timeline reconstruction relies on interpolated radar passes which may lack sufficient resolution to determine the exact hour of ground disturbance.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Bento Grid: Metadata & Checklist -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Data Used Card -->
+<div class="glass-panel rounded-xl p-md flex flex-col h-full">
+<h3 class="font-headline-sm text-headline-sm text-primary border-b border-white/10 pb-sm mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-surface-tint">satellite_alt</span>
+                        Data Modalities Used
+                    </h3>
+<ul class="space-y-sm flex-1">
+<li class="flex justify-between items-center bg-surface-container/50 px-md py-sm rounded border border-white/5">
+<span class="font-body-md text-body-md text-on-surface">Sentinel-2 (Optical)</span>
+<span class="font-label-mono text-label-mono text-primary-fixed-dim bg-primary-fixed-dim/10 px-sm py-[2px] rounded-full">3 SCENES</span>
+</li>
+<li class="flex justify-between items-center bg-surface-container/50 px-md py-sm rounded border border-white/5">
+<span class="font-body-md text-body-md text-on-surface">Sentinel-1 (SAR)</span>
+<span class="font-label-mono text-label-mono text-primary-fixed-dim bg-primary-fixed-dim/10 px-sm py-[2px] rounded-full">2 PASSES</span>
+</li>
+<li class="flex justify-between items-center bg-surface-container/50 px-md py-sm rounded border border-white/5">
+<span class="font-body-md text-body-md text-on-surface">Landsat-8 (Thermal)</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-variant px-sm py-[2px] rounded-full">EXCLUDED</span>
+</li>
+</ul>
+</div>
+<!-- Analyses Performed Card -->
+<div class="glass-panel rounded-xl p-md flex flex-col h-full">
+<h3 class="font-headline-sm text-headline-sm text-primary border-b border-white/10 pb-sm mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-surface-tint">task_alt</span>
+                        Analyses Performed
+                    </h3>
+<div class="grid grid-cols-1 gap-xs font-data-mono-lg text-data-mono-lg text-on-surface-variant flex-1 content-start">
+<div class="flex items-center gap-sm p-xs"><span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span> NDVI Computation</div>
+<div class="flex items-center gap-sm p-xs"><span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span> NDWI Extraction</div>
+<div class="flex items-center gap-sm p-xs"><span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span> Cross-Sensor Registration</div>
+<div class="flex items-center gap-sm p-xs bg-surface-variant/30 rounded border border-white/5"><span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span> Change Detection Mapping</div>
+<div class="flex items-center gap-sm p-xs"><span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span> SAR Backscatter Analysis</div>
+</div>
+</div>
+</div>
+<!-- Evidence Section (3 Cards) -->
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-md">Evidentiary Support</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Optical -->
+<div class="glass-panel rounded-xl p-md border-t-2 border-t-primary-container">
+<div class="flex justify-between items-start mb-md">
+<div class="font-headline-md text-headline-md text-primary">Optical</div>
+<span class="font-label-mono text-label-mono text-background bg-primary-container px-sm py-xs rounded-sm font-bold">SUPPORTING</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Clear geometric alterations observed in Sector 4G. RGB composites indicate removal of vegetation and presence of high-albedo materials consistent with concrete pouring.
+                        </p>
+</div>
+<!-- SAR -->
+<div class="glass-panel rounded-xl p-md border-t-2 border-t-primary-container">
+<div class="flex justify-between items-start mb-md">
+<div class="font-headline-md text-headline-md text-primary">SAR</div>
+<span class="font-label-mono text-label-mono text-background bg-primary-container px-sm py-xs rounded-sm font-bold">SUPPORTING</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            VH polarization shows a distinct double-bounce scattering effect emerging post-T0, highly indicative of new vertical metallic or concrete structures in the target grid.
+                        </p>
+</div>
+<!-- Temporal -->
+<div class="glass-panel rounded-xl p-md border-t-2 border-t-surface-variant opacity-80">
+<div class="flex justify-between items-start mb-md">
+<div class="font-headline-md text-headline-md text-primary">Temporal Pattern</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container-high px-sm py-xs rounded-sm">NOT AVAILABLE</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Insufficient historical baselines for this specific coordinate quadrant to definitively classify the activity as anomalous relative to seasonal or localized baseline norms.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Large Visual Evidence Panel -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col">
+<div class="p-sm px-md border-b border-white/10 flex justify-between items-center bg-surface-container/50">
+<div class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-sm">
+<span class="material-symbols-outlined text-[16px]">map</span>
+                        COORDINATES: 48°52'5.8"N 2°19'59.4"E
+                    </div>
+<div class="flex bg-background rounded p-[2px] border border-white/10">
+<button class="px-md py-xs font-data-mono-lg text-data-mono-lg bg-surface-variant text-on-surface rounded-sm transition-colors">Base Map</button>
+<button class="px-md py-xs font-data-mono-lg text-data-mono-lg text-on-surface-variant hover:text-primary-container transition-colors">Overlay Delta</button>
+</div>
+</div>
+<div class="relative w-full h-[500px] bg-surface-container-lowest">
+<!-- Image Pipeline Placeholder -->
+<div class="w-full h-full bg-cover bg-center" data-alt="A highly detailed, top-down satellite imagery view of a coastal industrial zone at twilight. The image is rendered with a dark, high-contrast geospatial intelligence aesthetic, overlayed with glowing cyan grid lines, vector polygons marking structural anomalies, and subtle data readouts hovering over key buildings. The mood is precise, technological, and ominous, consistent with a high-end military or intelligence dashboard." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuARvdfXlOxtUsTDvsgjrV7rl-40ajd4ttmuCRKfwMmIPDs3pe7m8pGe4GHwa-xGL0s0FOlRJ5Z-YnSFTpAUnyq6YA8K6blKeR9bjmSr3kkmGF7RcwvKiGHQwf00u5qvJHJFT13Pzqa2n5ihgJ9xDw_T8x-RkVB_g8UquSu8A4vKiDLMXHc0jgzZ3y68RIZQJTq82k6muvIGwOhkPZc_bpH-JpP-sAv6R4bwIywF6PShK1s9BI05NACO')"></div>
+<!-- UI overlay elements for realism -->
+<div class="absolute bottom-md left-md glass-panel p-sm rounded border border-white/10">
+<div class="font-label-mono text-label-mono text-primary-container flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                            LIVE SENSOR FEED
+                        </div>
+</div>
+<div class="absolute right-md top-md flex flex-col gap-xs">
+<button class="w-8 h-8 rounded glass-panel flex items-center justify-center text-on-surface hover:text-primary-container border border-white/20"><span class="material-symbols-outlined text-[18px]">add</span></button>
+<button class="w-8 h-8 rounded glass-panel flex items-center justify-center text-on-surface hover:text-primary-container border border-white/20"><span class="material-symbols-outlined text-[18px]">remove</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+
+</body></html>

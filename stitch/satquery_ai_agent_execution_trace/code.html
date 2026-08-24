@@ -1,0 +1,395 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Agent Execution Trace - SatQuery AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600&amp;family=Inter:wght@400&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#00f2ff",
+                        "surface-container-lowest": "#0a0e18",
+                        "surface-container-high": "#262a35",
+                        "surface-tint": "#00dbe7",
+                        "on-tertiary": "#2b303e",
+                        "on-primary-container": "#006a71",
+                        "primary-fixed": "#74f5ff",
+                        "on-surface": "#dfe2f1",
+                        "tertiary-fixed": "#dee2f4",
+                        "on-tertiary-fixed": "#161b28",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-dim": "#0f131d",
+                        "primary": "#e1fdff",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-container-low": "#171b26",
+                        "primary-fixed-dim": "#00dbe7",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#002022",
+                        "on-secondary": "#002e6a",
+                        "surface-bright": "#353944",
+                        "background": "#0f131d",
+                        "surface": "#0f131d",
+                        "secondary-container": "#0566d9",
+                        "on-primary": "#00363a",
+                        "on-surface-variant": "#b9cacb",
+                        "tertiary-fixed-dim": "#c2c6d8",
+                        "outline-variant": "#3a494b",
+                        "on-secondary-container": "#e6ecff",
+                        "tertiary": "#f7f6ff",
+                        "tertiary-container": "#d6daec",
+                        "outline": "#849495",
+                        "secondary": "#adc6ff",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#00696f",
+                        "on-background": "#dfe2f1",
+                        "surface-variant": "#313540",
+                        "surface-container-highest": "#313540",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#dfe2f1",
+                        "surface-container": "#1c1f2a",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-tertiary-fixed-variant": "#424655",
+                        "inverse-on-surface": "#2c303b",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-tertiary-container": "#5a5f6f"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "gutter": "16px",
+                        "xl": "40px",
+                        "xs": "4px",
+                        "margin-desktop": "32px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "lg": "24px"
+                    },
+                    fontFamily: {
+                        "headline-lg-mobile": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "data-mono-lg": ["JetBrains Mono"],
+                        "label-mono": ["JetBrains Mono"],
+                        "headline-sm": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Geist"]
+                    },
+                    fontSize: {
+                        "headline-lg-mobile": ["26px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "data-mono-lg": ["14px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-mono": ["12px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-sm": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0f131d;
+            color: #dfe2f1;
+        }
+        .glass-panel {
+            background: rgba(23, 27, 38, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
+        }
+        .glow-cyan-active {
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+            border-color: rgba(0, 242, 255, 0.5);
+        }
+        
+        /* Flowchart Connection Lines */
+        .flow-line {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+        .flow-line-active {
+            background-color: rgba(0, 242, 255, 0.6);
+            box-shadow: 0 0 8px rgba(0, 242, 255, 0.4);
+        }
+        
+        .node-connector-top::before {
+            content: '';
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .node-connector-bottom::after {
+            content: '';
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .node-connector-top.active::before,
+        .node-connector-bottom.active::after {
+            background-color: rgba(0, 242, 255, 0.6);
+            box-shadow: 0 0 8px rgba(0, 242, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full flex flex-col z-40 bg-surface-container-low/80 backdrop-blur-md border-r border-white/10 shadow-xl w-[320px] hidden md:flex">
+<!-- Header -->
+<div class="p-lg border-b border-white/10 flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center border border-white/10 overflow-hidden">
+<img alt="System Agent" class="w-full h-full object-cover" data-alt="A futuristic, high-tech stylized avatar representing an AI agent. It features glowing cyan digital circuitry patterns on a deep dark blue metallic background. The style is modern, sleek, and minimalist, evoking advanced artificial intelligence in a geospatial context. The lighting is dramatic and localized, emphasizing the glowing elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaC2IH7_N_-aHhArHJ7dmInVLgIOUSGDhyozkuhrbXzvIKiNweQ-iNQZMAr8MtXDGYE_lHATVuYzRN9YaTkOpr2cz8tODGaTK5BhPaFO8LYrp6GLW8ZcLgIjL5CvwvsgOpq16xZOKzu-K7N2BmK4BCZk9GZlRkwSnMzfpwx0sLRWgGRy2wNok-4gqYYPNSND0T_wvIMaSTtwKbMnCS3V0jr5lQDpAUSsPSkyxzYPpza7MgwG5RFHb3">
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm text-primary tracking-tight">SatQuery AI</h1>
+<p class="font-label-mono text-label-mono text-on-surface-variant mt-1">Mission Control</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 py-md flex flex-col gap-sm px-sm overflow-y-auto">
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all rounded-lg cursor-pointer" href="{{DATA:SCREEN:SCREEN_11}}"><span class="material-symbols-outlined text-[20px]">home</span><span class="font-label-mono text-label-mono">Home</span></a>
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all rounded-lg cursor-pointer" href="{{DATA:SCREEN:SCREEN_5}}"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-mono text-label-mono">Scenarios</span></a>
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all rounded-lg cursor-pointer" href="{{DATA:SCREEN:SCREEN_7}}"><span class="material-symbols-outlined text-[20px]">description</span><span class="font-label-mono text-label-mono">Evidence Report</span></a>
+<div class="mt-lg mb-sm px-md">
+<span class="font-label-mono text-label-mono text-on-surface-variant/50 uppercase">Execution Diagnostics</span>
+</div>
+<!-- Active State for Trace Page (Semantic Intent Match) -->
+<a class="bg-secondary-container/30 text-primary-container border-l-4 border-primary-container px-md py-sm flex items-center gap-md rounded-r-lg active:translate-x-1 transition-transform cursor-pointer" href="{{DATA:SCREEN:SCREEN_6}}">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="font-label-mono text-label-mono">Agent Execution Trace</span>
+</a>
+</div>
+<!-- Footer Links -->
+<div class="p-sm border-t border-white/10 flex flex-col gap-sm">
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all rounded-lg cursor-pointer" href="{{DATA:SCREEN:SCREEN_4}}">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span class="font-label-mono text-label-mono">History</span>
+</a>
+<a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all rounded-lg cursor-pointer" href="{{DATA:SCREEN:SCREEN_2}}"><span class="material-symbols-outlined text-[20px]">info</span><span class="font-label-mono text-label-mono">About</span></a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[320px] h-screen overflow-hidden flex flex-col bg-background relative">
+<!-- Subtle Background Grid/Texture -->
+<div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 24px 24px;"></div>
+<!-- Header -->
+<header class="h-[72px] flex items-center justify-between px-xl border-b border-white/5 bg-surface/50 backdrop-blur-sm z-10 shrink-0">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary-fixed-dim">Execution Trace: Query #7742-ALPHA</h2>
+<div class="flex items-center gap-md mt-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                        Status: Analyzing
+                    </span>
+<span class="font-label-mono text-label-mono text-on-surface-variant/50">|</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">T+ 00:04:12</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="glass-panel px-md py-sm rounded-lg flex items-center gap-lg">
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-primary-container shadow-[0_0_8px_rgba(0,242,255,0.6)]"></div>
+<span class="font-label-mono text-label-mono text-on-surface">Completed</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-surface-variant border border-white/20"></div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Pending</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]"></div>
+<span class="font-label-mono text-label-mono text-on-surface">Warning / Retrying</span>
+</div>
+</div>
+</header>
+<!-- Flowchart Canvas -->
+<div class="flex-1 overflow-auto relative p-xl flex flex-col items-center">
+<!-- Structural Container for Centering -->
+<div class="relative w-full max-w-[1000px] flex flex-col items-center pb-xl pt-lg">
+<!-- 1. Query Analyzer -->
+<div class="relative z-10 w-[400px] glass-panel rounded-xl border-l-2 border-l-primary-container glow-cyan-active p-md mb-[48px] node-connector-bottom active">
+<div class="flex justify-between items-start mb-sm border-b border-white/10 pb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]">analytics</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Query Analyzer</h3>
+</div>
+<span class="font-label-mono text-label-mono text-primary-container bg-primary-container/10 px-2 py-1 rounded">DONE</span>
+</div>
+<div class="space-y-sm">
+<p class="font-body-md text-body-md text-on-surface-variant">Parsed natural language request: "Detect new construction near Facility X over last 30 days."</p>
+<div class="bg-surface-container-lowest p-sm rounded border border-white/5 font-data-mono-lg text-data-mono-lg text-tertiary-fixed-dim text-xs">
+                            &gt; Extracted Target: [34.0522, -118.2437]<br>
+                            &gt; Timeframe: [2023-09-15, 2023-10-15]<br>
+                            &gt; Intent: Change Detection (Construction)
+                        </div>
+<div class="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+<span class="font-label-mono text-label-mono text-on-surface-variant/50">Duration: 450ms</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant/50">14:02:01.100Z</span>
+</div>
+</div>
+</div>
+<!-- 2. Evidence Planner -->
+<div class="relative z-10 w-[440px] glass-panel rounded-xl border-l-2 border-l-primary-container glow-cyan-active p-md mb-[48px] node-connector-top active node-connector-bottom active">
+<div class="flex justify-between items-start mb-sm border-b border-white/10 pb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]">schema</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Evidence Planner</h3>
+</div>
+<span class="font-label-mono text-label-mono text-primary-container bg-primary-container/10 px-2 py-1 rounded">DONE</span>
+</div>
+<div class="space-y-sm">
+<p class="font-body-md text-body-md text-on-surface-variant">Formulated multi-modal strategy for maximum confidence.</p>
+<div class="flex gap-sm mt-sm">
+<span class="bg-surface-variant/50 border border-white/10 px-2 py-1 rounded-full font-label-mono text-label-mono text-on-surface-variant text-[10px]">Require: High-Res Optical</span>
+<span class="bg-surface-variant/50 border border-white/10 px-2 py-1 rounded-full font-label-mono text-label-mono text-on-surface-variant text-[10px]">Require: SAR (Cloud Cover Mitigation)</span>
+</div>
+<div class="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+<span class="font-label-mono text-label-mono text-on-surface-variant/50">Duration: 820ms</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant/50">14:02:01.920Z</span>
+</div>
+</div>
+</div>
+<!-- Branching Lines SVG Overlay -->
+<div class="absolute top-[320px] left-0 w-full h-[60px] z-0 pointer-events-none">
+<svg height="100%" preserveAspectRatio="none" width="100%">
+<!-- Left Branch -->
+<path class="drop-shadow-[0_0_4px_rgba(0,242,255,0.4)]" d="M 500 0 C 500 30, 200 30, 200 60" fill="none" stroke="rgba(0, 242, 255, 0.6)" stroke-width="2"></path>
+<!-- Center Branch -->
+<path class="drop-shadow-[0_0_4px_rgba(0,242,255,0.4)]" d="M 500 0 L 500 60" fill="none" stroke="rgba(0, 242, 255, 0.6)" stroke-width="2"></path>
+<!-- Right Branch -->
+<path d="M 500 0 C 500 30, 800 30, 800 60" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-dasharray="4 4" stroke-width="2"></path>
+</svg>
+</div>
+<!-- 3. Parallel Branches Container -->
+<div class="relative z-10 w-full flex justify-between gap-lg mb-[48px] mt-[12px]">
+<!-- Branch A: Optical -->
+<div class="w-[300px] glass-panel rounded-xl border-l-2 border-l-primary-container glow-cyan p-md relative">
+<div class="absolute -top-[24px] left-1/2 w-px h-[24px] bg-primary-container/60 shadow-[0_0_8px_rgba(0,242,255,0.4)]"></div>
+<div class="absolute -bottom-[24px] left-1/2 w-px h-[24px] bg-primary-container/60 shadow-[0_0_8px_rgba(0,242,255,0.4)]"></div>
+<div class="flex justify-between items-start mb-sm border-b border-white/10 pb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container text-[18px]">satellite_alt</span>
+<h3 class="font-headline-sm text-[16px] text-primary">Optical Analysis</h3>
+</div>
+<span class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_rgba(0,242,255,0.6)]"></span>
+</div>
+<div class="space-y-xs">
+<div class="font-data-mono-lg text-[11px] text-tertiary-fixed-dim bg-surface-container-lowest p-2 rounded border border-white/5">
+                                [FETCH] Maxar WV-3 Archives<br>
+                                [PROCESS] Co-registration (Success)<br>
+                                [INFER] Foundation Model V4
+                            </div>
+<p class="font-body-md text-[13px] text-on-surface-variant mt-2 text-primary-container">Detected: Earthworks (0.92 conf)</p>
+<div class="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+<span class="font-label-mono text-[10px] text-on-surface-variant/50">Dur: 12.4s</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant/50">14:02:14.3Z</span>
+</div>
+</div>
+</div>
+<!-- Branch B: SAR -->
+<div class="w-[300px] glass-panel rounded-xl border-l-2 border-l-amber-400 p-md relative shadow-[0_0_15px_rgba(251,191,36,0.1)]">
+<div class="absolute -top-[24px] left-1/2 w-px h-[24px] bg-primary-container/60 shadow-[0_0_8px_rgba(0,242,255,0.4)]"></div>
+<div class="absolute -bottom-[24px] left-1/2 w-px h-[24px] bg-primary-container/60 shadow-[0_0_8px_rgba(0,242,255,0.4)]"></div>
+<div class="flex justify-between items-start mb-sm border-b border-white/10 pb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-amber-400 text-[18px]">radar</span>
+<h3 class="font-headline-sm text-[16px] text-primary">SAR Analysis</h3>
+</div>
+<span class="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)] animate-pulse"></span>
+</div>
+<div class="space-y-xs">
+<div class="font-data-mono-lg text-[11px] text-tertiary-fixed-dim bg-surface-container-lowest p-2 rounded border border-white/5">
+                                [FETCH] Sentinel-1 GRD<br>
+<span class="text-amber-400">[WARN] Speckle filter degradation</span><br>
+                                [RETRY] Applying Lee Filter v2...
+                            </div>
+<p class="font-body-md text-[13px] text-on-surface-variant mt-2 text-amber-400/80">Processing Coherence Map...</p>
+<div class="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+<span class="font-label-mono text-[10px] text-on-surface-variant/50">Running...</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant/50">--:--:--</span>
+</div>
+</div>
+</div>
+<!-- Branch C: Temporal (Skipped) -->
+<div class="w-[300px] glass-panel rounded-xl border-l-2 border-l-surface-variant p-md relative opacity-60">
+<div class="absolute -top-[24px] left-1/2 w-px h-[24px] bg-white/10"></div>
+<div class="absolute -bottom-[24px] left-1/2 w-px h-[24px] bg-white/10"></div>
+<div class="flex justify-between items-start mb-sm border-b border-white/10 pb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">timelapse</span>
+<h3 class="font-headline-sm text-[16px] text-on-surface-variant">Temporal Pattern</h3>
+</div>
+<span class="font-label-mono text-[10px] text-on-surface-variant bg-surface-variant/50 px-2 py-0.5 rounded">SKIPPED</span>
+</div>
+<div class="space-y-xs">
+<p class="font-body-md text-[13px] text-on-surface-variant/70">Insufficient historical density in region for pattern-of-life analysis.</p>
+<div class="flex justify-between items-center mt-4 pt-2 border-t border-white/5">
+<span class="font-label-mono text-[10px] text-on-surface-variant/40">Dur: 12ms</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant/40">14:02:01.932Z</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Joining Lines SVG Overlay -->
+<div class="absolute bottom-[230px] left-0 w-full h-[60px] z-0 pointer-events-none">
+<svg height="100%" preserveAspectRatio="none" width="100%">
+<!-- Left Join -->
+<path class="drop-shadow-[0_0_4px_rgba(0,242,255,0.4)]" d="M 200 0 C 200 30, 500 30, 500 60" fill="none" stroke="rgba(0, 242, 255, 0.6)" stroke-width="2"></path>
+<!-- Center Join -->
+<path class="drop-shadow-[0_0_4px_rgba(0,242,255,0.4)]" d="M 500 0 L 500 60" fill="none" stroke="rgba(0, 242, 255, 0.6)" stroke-width="2"></path>
+<!-- Right Join -->
+<path d="M 800 0 C 800 30, 500 30, 500 60" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-dasharray="4 4" stroke-width="2"></path>
+</svg>
+</div>
+<!-- 4. Evidence Fusion (Pending) -->
+<div class="relative z-10 w-[440px] glass-panel rounded-xl border-l-2 border-l-surface-variant p-md mt-[12px] opacity-80">
+<div class="flex justify-between items-start mb-sm border-b border-white/10 pb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">hub</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface-variant">Evidence Fusion</h3>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-variant/50 px-2 py-1 rounded">WAITING</span>
+</div>
+<div class="space-y-sm">
+<p class="font-body-md text-body-md text-on-surface-variant/70">Awaiting completion of all upstream active branches to synthesize findings.</p>
+<div class="flex items-center gap-sm mt-sm">
+<div class="w-full bg-surface-container-lowest h-2 rounded-full overflow-hidden border border-white/5">
+<div class="bg-primary-container/50 h-full w-[50%] rounded-full relative">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent to-primary-container/30 animate-[pulse_2s_ease-in-out_infinite]"></div>
+</div>
+</div>
+<span class="font-label-mono text-[10px] text-on-surface-variant/70 w-[40px]">1 / 2</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+
+</body></html>

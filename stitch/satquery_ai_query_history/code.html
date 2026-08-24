@@ -1,0 +1,300 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Query History - SatQuery AI</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "primary-container": "#00f2ff",
+                            "surface-container-lowest": "#0a0e18",
+                            "surface-container-high": "#262a35",
+                            "surface-tint": "#00dbe7",
+                            "on-tertiary": "#2b303e",
+                            "on-primary-container": "#006a71",
+                            "primary-fixed": "#74f5ff",
+                            "on-surface": "#dfe2f1",
+                            "tertiary-fixed": "#dee2f4",
+                            "on-tertiary-fixed": "#161b28",
+                            "on-secondary-fixed-variant": "#004395",
+                            "surface-dim": "#0f131d",
+                            "primary": "#e1fdff",
+                            "error": "#ffb4ab",
+                            "on-primary-fixed-variant": "#004f54",
+                            "on-secondary-fixed": "#001a42",
+                            "surface-container-low": "#171b26",
+                            "primary-fixed-dim": "#00dbe7",
+                            "on-error": "#690005",
+                            "on-primary-fixed": "#002022",
+                            "on-secondary": "#002e6a",
+                            "surface-bright": "#353944",
+                            "background": "#0f131d",
+                            "surface": "#0f131d",
+                            "secondary-container": "#0566d9",
+                            "on-primary": "#00363a",
+                            "on-surface-variant": "#b9cacb",
+                            "tertiary-fixed-dim": "#c2c6d8",
+                            "outline-variant": "#3a494b",
+                            "on-secondary-container": "#e6ecff",
+                            "tertiary": "#f7f6ff",
+                            "tertiary-container": "#d6daec",
+                            "outline": "#849495",
+                            "secondary": "#adc6ff",
+                            "on-error-container": "#ffdad6",
+                            "inverse-primary": "#00696f",
+                            "on-background": "#dfe2f1",
+                            "surface-variant": "#313540",
+                            "surface-container-highest": "#313540",
+                            "error-container": "#93000a",
+                            "inverse-surface": "#dfe2f1",
+                            "surface-container": "#1c1f2a",
+                            "secondary-fixed-dim": "#adc6ff",
+                            "on-tertiary-fixed-variant": "#424655",
+                            "inverse-on-surface": "#2c303b",
+                            "secondary-fixed": "#d8e2ff",
+                            "on-tertiary-container": "#5a5f6f"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "gutter": "16px",
+                            "xl": "40px",
+                            "xs": "4px",
+                            "margin-desktop": "32px",
+                            "md": "16px",
+                            "sm": "8px",
+                            "margin-mobile": "16px",
+                            "unit": "4px",
+                            "lg": "24px"
+                    },
+                    "fontFamily": {
+                            "headline-lg-mobile": ["Geist"],
+                            "body-lg": ["Inter"],
+                            "data-mono-lg": ["JetBrains Mono"],
+                            "label-mono": ["JetBrains Mono"],
+                            "headline-sm": ["Geist"],
+                            "headline-lg": ["Geist"],
+                            "body-md": ["Inter"],
+                            "headline-md": ["Geist"]
+                    },
+                    "fontSize": {
+                            "headline-lg-mobile": ["26px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                            "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                            "data-mono-lg": ["14px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                            "label-mono": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                            "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                            "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                            "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                            "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0f131d; /* Fallback */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 242, 255, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 242, 255, 0.03), transparent 25%);
+        }
+        /* Custom Scrollbar for data-heavy tables */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(23, 27, 38, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(132, 148, 149, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 242, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased min-h-screen flex selection:bg-primary-container/30 selection:text-primary">
+<!-- SideNavBar (Shared Component) -->
+<nav class="bg-surface-container-low/80 backdrop-blur-md font-label-mono text-label-mono docked left-0 h-screen w-[320px] border-r border-white/10 shadow-xl fixed left-0 top-0 flex flex-col z-40 hidden md:flex">
+<!-- Header -->
+<div class="p-lg border-b border-white/10 flex items-center gap-md">
+<div class="h-10 w-10 rounded-full bg-surface-container-highest border border-white/10 overflow-hidden shrink-0">
+<img alt="System Agent" class="w-full h-full object-cover" data-alt="A highly detailed avatar of an AI system agent, featuring glowing cybernetic components, deep space metallic textures, and sharp cyan light accents against a dark void background, conveying advanced technological intelligence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRMnoBvLGzVH6zoKj7opvkKWLFWnbkrbYKPtF13peWvg1v6-Ew-Vy_LXyFA0z2H9DEgGIQQ0U4w2eT0qdECl7u7axorg1S1QQnuaoAfSJTsKGxnTBzHoe4QbFp59ayQeV3bfZt3gU2Hsnpxpk0QKdILESU9EECMUwDHFgugGic2ocD306pAUz_UBcS6fDweVhslAxGO5BQXuEs_PS0vcqC75x3Gr-0947OcsKrUut3zfdIG3OPgXfC">
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm text-primary tracking-tight">SatQuery AI</h1>
+<p class="text-on-surface-variant font-label-mono text-label-mono opacity-80">Mission Control</p>
+</div>
+</div>
+<!-- Main Tabs -->
+<div class="flex-1 py-md flex flex-col gap-xs overflow-y-auto"><a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_11}}"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">home</span>Home</a><a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_5}}"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">explore</span>Scenarios</a><a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_7}}"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">description</span>Evidence Report</a><a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_6}}"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_tree</span>Agent Trace</a></div>
+<!-- Footer Tabs -->
+<div class="border-t border-white/10 py-md flex flex-col gap-xs"><a class="bg-secondary-container/30 text-primary-container border-l-4 border-primary-container px-md py-sm flex items-center gap-md transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_4}}"><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">history</span>History</a><a class="text-on-surface-variant px-md py-sm flex items-center gap-md hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1" href="{{DATA:SCREEN:SCREEN_2}}"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">info</span>About</a></div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full md:ml-[320px] min-h-screen flex flex-col relative z-0">
+<!-- Page Header & Filter Bar -->
+<header class="sticky top-0 z-10 bg-background/80 backdrop-blur-xl border-b border-white/10 px-margin-desktop py-lg flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary-fixed-dim">Query History</h2>
+<p class="text-on-surface-variant mt-xs">Past operational queries and intelligence reports.</p>
+</div>
+<button class="bg-surface-container-high border border-outline-variant hover:border-primary-container text-primary-fixed-dim px-md py-sm rounded-lg flex items-center gap-sm transition-all shadow-[0_0_0_rgba(0,242,255,0)] hover:shadow-[0_0_15px_rgba(0,242,255,0.2)]">
+<span class="material-symbols-outlined text-sm">download</span>
+<span class="font-label-mono text-label-mono">Export CSV</span>
+</button>
+</div>
+<!-- Search and Filter Controls -->
+<div class="flex flex-wrap gap-md items-center bg-surface-container-low/50 p-sm rounded-lg border border-white/5">
+<div class="relative flex-1 min-w-[280px]">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-md py-sm pl-xl pr-md text-on-surface font-data-mono-lg focus:ring-1 focus:ring-primary-container focus:border-primary-container transition-colors placeholder:text-on-surface-variant/50" placeholder="Search query text, tags, or execution ID..." type="text">
+</div>
+<div class="flex gap-sm">
+<select class="bg-surface-container-lowest border border-outline-variant rounded-md py-sm pl-md pr-xl text-on-surface font-data-mono-lg focus:ring-1 focus:ring-primary-container focus:border-primary-container appearance-none">
+<option>All Scenarios</option>
+<option>Strategic</option>
+<option>Tactical</option>
+<option>Infrastructure</option>
+</select>
+<select class="bg-surface-container-lowest border border-outline-variant rounded-md py-sm pl-md pr-xl text-on-surface font-data-mono-lg focus:ring-1 focus:ring-primary-container focus:border-primary-container appearance-none">
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+<option>All Time</option>
+</select>
+</div>
+</div>
+</header>
+<!-- Data Canvas -->
+<div class="p-margin-desktop flex-1 overflow-x-auto">
+<!-- Glass Card Table Container -->
+<div class="bg-surface-container/60 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse whitespace-nowrap">
+<thead>
+<tr class="border-b border-white/10 bg-surface-container-high/30">
+<th class="py-md px-lg font-label-mono text-label-mono text-on-surface-variant tracking-wider uppercase">Execution ID</th>
+<th class="py-md px-lg font-label-mono text-label-mono text-on-surface-variant tracking-wider uppercase">Query Intent</th>
+<th class="py-md px-lg font-label-mono text-label-mono text-on-surface-variant tracking-wider uppercase">Scenario Tag</th>
+<th class="py-md px-lg font-label-mono text-label-mono text-on-surface-variant tracking-wider uppercase">Timestamp (UTC)</th>
+<th class="py-md px-lg font-label-mono text-label-mono text-on-surface-variant tracking-wider uppercase">Confidence</th>
+<th class="py-md px-lg font-label-mono text-label-mono text-on-surface-variant tracking-wider uppercase text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5 font-data-mono-lg text-data-mono-lg">
+<!-- Row 1 -->
+<tr class="group hover:bg-surface-variant/30 transition-colors">
+<td class="py-md px-lg text-secondary-fixed-dim">EX-8924A</td>
+<td class="py-md px-lg text-on-surface font-body-md text-body-md max-w-[300px] truncate" title="Identify new surface-to-air missile emplacements within Sector 4G perimeter.">
+                                Identify new surface-to-air missile emplacements within Sector 4G perimeter.
+                            </td>
+<td class="py-md px-lg">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-error-container/20 border border-error/30 text-error text-[10px] uppercase font-bold tracking-wider">
+                                    Strategic
+                                </span>
+</td>
+<td class="py-md px-lg text-on-surface-variant">2023-10-27T08:14:00Z</td>
+<td class="py-md px-lg">
+<div class="flex items-center gap-2">
+<span class="text-primary-container">94%</span>
+<div class="h-1.5 w-16 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[94%] shadow-[0_0_8px_rgba(0,242,255,0.6)]"></div>
+</div>
+</div>
+</td>
+<td class="py-md px-lg text-right">
+<a class="text-primary-fixed hover:text-primary transition-colors flex items-center justify-end gap-1" href="{{DATA:SCREEN:SCREEN_7}}">
+                                    View <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-surface-variant/30 transition-colors">
+<td class="py-md px-lg text-secondary-fixed-dim">EX-8923B</td>
+<td class="py-md px-lg text-on-surface font-body-md text-body-md max-w-[300px] truncate" title="Assess structural changes to port facilities following seismic event.">
+                                Assess structural changes to port facilities following seismic event.
+                            </td>
+<td class="py-md px-lg">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-secondary-container/20 border border-secondary/30 text-secondary text-[10px] uppercase font-bold tracking-wider">
+                                    Infrastructure
+                                </span>
+</td>
+<td class="py-md px-lg text-on-surface-variant">2023-10-26T14:22:15Z</td>
+<td class="py-md px-lg">
+<div class="flex items-center gap-2">
+<span class="text-primary-container/80">88%</span>
+<div class="h-1.5 w-16 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container/80 w-[88%]"></div>
+</div>
+</div>
+</td>
+<td class="py-md px-lg text-right">
+<a class="text-primary-fixed hover:text-primary transition-colors flex items-center justify-end gap-1" href="{{DATA:SCREEN:SCREEN_7}}">
+                                    View <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-surface-variant/30 transition-colors">
+<td class="py-md px-lg text-secondary-fixed-dim">EX-8919C</td>
+<td class="py-md px-lg text-on-surface font-body-md text-body-md max-w-[300px] truncate" title="Track movement of unauthorized vessels in restricted maritime zone.">
+                                Track movement of unauthorized vessels in restricted maritime zone.
+                            </td>
+<td class="py-md px-lg">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-on-primary-container/20 border border-primary/30 text-primary-fixed-dim text-[10px] uppercase font-bold tracking-wider">
+                                    Tactical
+                                </span>
+</td>
+<td class="py-md px-lg text-on-surface-variant">2023-10-25T09:05:44Z</td>
+<td class="py-md px-lg">
+<div class="flex items-center gap-2">
+<span class="text-on-surface-variant">72%</span>
+<div class="h-1.5 w-16 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-outline w-[72%]"></div>
+</div>
+</div>
+</td>
+<td class="py-md px-lg text-right">
+<a class="text-primary-fixed hover:text-primary transition-colors flex items-center justify-end gap-1" href="{{DATA:SCREEN:SCREEN_7}}">
+                                    View <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination Footer -->
+<div class="border-t border-white/10 p-md flex items-center justify-between bg-surface-container-lowest/50">
+<span class="font-label-mono text-label-mono text-on-surface-variant">Showing 1-3 of 142 records</span>
+<div class="flex gap-xs">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-variant transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+
+</body></html>

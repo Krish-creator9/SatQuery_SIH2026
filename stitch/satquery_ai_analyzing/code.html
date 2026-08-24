@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SatQuery AI - Analysis Loading</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#00363a",
+                    "surface-container-highest": "#313540",
+                    "secondary": "#adc6ff",
+                    "primary-container": "#00f2ff",
+                    "tertiary": "#f7f6ff",
+                    "on-primary-container": "#006a71",
+                    "primary": "#e1fdff",
+                    "inverse-primary": "#00696f",
+                    "on-secondary-container": "#e6ecff",
+                    "error-container": "#93000a",
+                    "secondary-fixed": "#d8e2ff",
+                    "surface-container-lowest": "#0a0e18",
+                    "surface-dim": "#0f131d",
+                    "surface-tint": "#00dbe7",
+                    "surface-container": "#1c1f2a",
+                    "surface-variant": "#313540",
+                    "surface": "#0f131d",
+                    "on-secondary-fixed": "#001a42",
+                    "on-secondary": "#002e6a",
+                    "inverse-surface": "#dfe2f1",
+                    "on-tertiary-container": "#5a5f6f",
+                    "on-tertiary-fixed-variant": "#424655",
+                    "on-surface-variant": "#b9cacb",
+                    "primary-fixed-dim": "#00dbe7",
+                    "on-tertiary": "#2b303e",
+                    "tertiary-fixed-dim": "#c2c6d8",
+                    "outline-variant": "#3a494b",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#353944",
+                    "on-error": "#690005",
+                    "tertiary-container": "#d6daec",
+                    "on-tertiary-fixed": "#161b28",
+                    "error": "#ffb4ab",
+                    "tertiary-fixed": "#dee2f4",
+                    "on-primary-fixed-variant": "#004f54",
+                    "outline": "#849495",
+                    "surface-container-low": "#171b26",
+                    "background": "#0f131d",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "on-surface": "#dfe2f1",
+                    "on-secondary-fixed-variant": "#004395",
+                    "primary-fixed": "#74f5ff",
+                    "inverse-on-surface": "#2c303b",
+                    "on-primary-fixed": "#002022",
+                    "surface-container-high": "#262a35",
+                    "secondary-container": "#0566d9",
+                    "on-background": "#dfe2f1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "margin-desktop": "32px",
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "xl": "40px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "data-mono-lg": ["JetBrains Mono"],
+                    "headline-lg": ["Geist"],
+                    "headline-sm": ["Geist"],
+                    "label-mono": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "data-mono-lg": ["14px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "label-mono": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        
+        .glass-panel {
+            background-color: rgba(22, 27, 40, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(0, 242, 255, 0.1);
+            border-top: 4px solid theme('colors.primary-container');
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pulse-text {
+            animation: pulse-opacity 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-opacity {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        
+        .dimmed {
+            opacity: 0.4;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden bg-background text-on-background font-body-md">
+<!-- Top Navigation -->
+<nav class="bg-surface/70 backdrop-blur-xl flex justify-between items-center px-lg py-sm w-full sticky top-0 z-50 border-b border-white/10 shadow-sm">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary-fixed-dim tracking-tight">SatQuery AI</span>
+</div>
+<div class="flex gap-md items-center">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-container transition-colors" data-weight="regular">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-container transition-colors" data-weight="regular">settings</span>
+<img alt="User Session Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A small, circular avatar portrait of a military or technical specialist in a dark, high-contrast lighting setup, reflecting a futuristic, mission control aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPeMrDw681Fghur5WyDd5-JbcyyVB0pGCYTRsrJ2bxG4Tb2R8V6dp3x-rUBACYg46__IxwjL_eaTxR9dmR1wcYe4k8D82XmS5_YsHOp_BUh2xj-mF6rqc_ZHBSofOA-KbSJ7CMtPpx-LbEUJtyMwRXuE4I1x5x1rzhwzEG-hOBZEIwVMdMkdi1exgw_-z1GOPN76OqNdaOBFMViYOzr1Iky3NO1vuoZiB7EsPnS4i-pYZ3XTwvR7bM"/>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- Side Navigation (Dimmed) -->
+<aside class="bg-surface-container-low/80 backdrop-blur-md border-r border-white/10 shadow-xl fixed left-0 top-0 h-full flex flex-col z-40 w-[320px] pt-20 dimmed hidden md:flex">
+<!-- Active State inferred as Analysis is ongoing, but let's assume we are in 'Single Image' context -->
+<div class="flex flex-col gap-sm p-sm flex-1">
+<div class="bg-secondary-container/30 text-primary-container border-l-4 border-primary-container px-md py-sm flex items-center gap-md cursor-pointer active:translate-x-1 transition-transform">
+<span class="material-symbols-outlined">image</span>
+<span class="font-label-mono text-label-mono">Single Image</span>
+</div>
+<div class="text-on-surface-variant px-md py-sm flex items-center gap-md cursor-pointer hover:bg-surface-variant/50 hover:text-on-surface transition-all">
+<span class="material-symbols-outlined">compare</span>
+<span class="font-label-mono text-label-mono">Change Detection</span>
+</div>
+<div class="text-on-surface-variant px-md py-sm flex items-center gap-md cursor-pointer hover:bg-surface-variant/50 hover:text-on-surface transition-all">
+<span class="material-symbols-outlined">layers</span>
+<span class="font-label-mono text-label-mono">Optical + SAR Fusion</span>
+</div>
+</div>
+<div class="mt-auto border-t border-white/10 p-sm">
+<div class="text-on-surface-variant px-md py-sm flex items-center gap-md cursor-pointer hover:bg-surface-variant/50 hover:text-on-surface transition-all">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-mono text-label-mono">History</span>
+</div>
+<div class="text-on-surface-variant px-md py-sm flex items-center gap-md cursor-pointer hover:bg-surface-variant/50 hover:text-on-surface transition-all">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-mono text-label-mono">Audit Logs</span>
+</div>
+</div>
+</aside>
+<!-- Main Workspace (Center - Active) -->
+<main class="flex-1 ml-0 md:ml-[320px] mr-0 md:mr-[320px] relative flex flex-col items-center justify-center p-lg">
+<!-- Map Background Placeholder -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none" data-alt="A dark, high-resolution satellite imagery map showing complex urban infrastructure from top-down view, tinted in deep blues and blacks with subtle cyan grid lines. The image has a serious, technical, and analytical mission-control mood." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBqYOyw8scWVJPvCI2wpavd59TZXk7Ppn9xMtegCQvJctxe3-Vre_4r1Ra3wfTwRBqQ6F3cermYnDxrt9RLqezDtpQsJYF9iaYD9h7-HOiJaCqLA-etvjtGncPuXBhNGccTLQkUIe9kH5bY5ykwu0VNTf49ePCyBwXEbvSi1EEUPJecOwA7hlk45tN7GUpP_l_uqp_wWHAQb9PBW8ZekyEje_QFe1jj-j4kvleJgK_i5CvHMHYdff9i')"></div>
+<div class="z-10 flex flex-col items-center glass-panel rounded-xl p-xl max-w-lg w-full text-center">
+<div class="spinner mb-lg"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary-fixed mb-sm tracking-tight pulse-text">Analyzing Imagery...</h2>
+<p class="font-data-mono-lg text-data-mono-lg text-on-surface-variant mb-md">Agent is processing tiles and extracting features...</p>
+<div class="w-full bg-surface-container-highest rounded-full h-2 mb-sm overflow-hidden">
+<div class="bg-primary-container h-full rounded-full transition-all duration-300" style="width: 65%; box-shadow: 0 0 10px rgba(0, 242, 255, 0.5);"></div>
+</div>
+<div class="w-full flex justify-between font-label-mono text-label-mono text-on-surface-variant">
+<span>Progress</span>
+<span class="text-primary-container">65%</span>
+</div>
+</div>
+</main>
+<!-- Right Sidebar (Execution Trace - Not dimmed, as it's relevant to progress) -->
+<aside class="w-[320px] border-l border-white/10 bg-surface-container-low/90 backdrop-blur-md hidden md:flex flex-col z-30 fixed right-0 top-0 h-full pt-20">
+<div class="p-md border-b border-white/10">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Execution Trace</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant mt-xs">Process ID: SQ-9942A</p>
+</div>
+<div class="flex-1 p-md overflow-y-auto space-y-md font-label-mono text-label-mono">
+<!-- Completed Step 1 -->
+<div class="flex gap-sm">
+<div class="mt-1 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary-container text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="w-px h-full bg-primary-container/30 my-xs"></div>
+</div>
+<div class="pb-md">
+<div class="text-primary-container">Query received</div>
+<div class="text-on-surface-variant text-[10px] mt-1">08:42:15.001 Z</div>
+<div class="bg-surface-container-highest p-sm rounded mt-sm text-on-surface text-[10px] border border-white/5">
+                            Detect new construction sites in Area Sector 4G.
+                        </div>
+</div>
+</div>
+<!-- Completed Step 2 -->
+<div class="flex gap-sm">
+<div class="mt-1 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary-container text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="w-px h-full bg-primary-container/30 my-xs"></div>
+</div>
+<div class="pb-md">
+<div class="text-primary-container">Intent classified</div>
+<div class="text-on-surface-variant text-[10px] mt-1">08:42:16.420 Z</div>
+<div class="flex gap-xs mt-sm">
+<span class="bg-primary-container/10 text-primary-container px-2 py-1 rounded-full text-[10px] border border-primary-container/30">ObjectDetection</span>
+<span class="bg-secondary-container/20 text-secondary-fixed-dim px-2 py-1 rounded-full text-[10px] border border-secondary-container/30">TimeSeries</span>
+</div>
+</div>
+</div>
+<!-- Current Step -->
+<div class="flex gap-sm">
+<div class="mt-1 flex flex-col items-center">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-[16px] animate-spin" style="font-variation-settings: 'FILL' 0;">progress_activity</span>
+<div class="w-px h-full bg-white/10 my-xs"></div>
+</div>
+<div class="pb-md">
+<div class="text-secondary-fixed-dim">Extracting features</div>
+<div class="text-on-surface-variant text-[10px] mt-1">08:42:18.992 Z (Active)</div>
+<div class="text-on-surface-variant text-[10px] mt-sm">Processing image tiles... 65% complete. Identifying structural anomalies.</div>
+</div>
+</div>
+<!-- Pending Step -->
+<div class="flex gap-sm opacity-40">
+<div class="mt-1 flex flex-col items-center">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">radio_button_unchecked</span>
+</div>
+<div class="pb-md">
+<div class="text-on-surface-variant">Compile report</div>
+<div class="text-on-surface-variant text-[10px] mt-1">Pending</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

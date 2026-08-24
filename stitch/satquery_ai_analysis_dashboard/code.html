@@ -1,0 +1,406 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SatQuery AI - Mission Control</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Note: Geist is typically imported differently, but assuming it's available or falling back gracefully for this environment -->
+<style>
+        /* Fallback for Geist if not available */
+        @font-face {
+            font-family: 'Geist';
+            src: local('Inter'), local('sans-serif'); 
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#00363a",
+                      "surface-container-highest": "#313540",
+                      "secondary": "#adc6ff",
+                      "primary-container": "#00f2ff",
+                      "tertiary": "#f7f6ff",
+                      "on-primary-container": "#006a71",
+                      "primary": "#e1fdff",
+                      "inverse-primary": "#00696f",
+                      "on-secondary-container": "#e6ecff",
+                      "error-container": "#93000a",
+                      "secondary-fixed": "#d8e2ff",
+                      "surface-container-lowest": "#0a0e18",
+                      "surface-dim": "#0f131d",
+                      "surface-tint": "#00dbe7",
+                      "surface-container": "#1c1f2a",
+                      "surface-variant": "#313540",
+                      "surface": "#0f131d",
+                      "on-secondary-fixed": "#001a42",
+                      "on-secondary": "#002e6a",
+                      "inverse-surface": "#dfe2f1",
+                      "on-tertiary-container": "#5a5f6f",
+                      "on-tertiary-fixed-variant": "#424655",
+                      "on-surface-variant": "#b9cacb",
+                      "primary-fixed-dim": "#00dbe7",
+                      "on-tertiary": "#2b303e",
+                      "tertiary-fixed-dim": "#c2c6d8",
+                      "outline-variant": "#3a494b",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#353944",
+                      "on-error": "#690005",
+                      "tertiary-container": "#d6daec",
+                      "on-tertiary-fixed": "#161b28",
+                      "error": "#ffb4ab",
+                      "tertiary-fixed": "#dee2f4",
+                      "on-primary-fixed-variant": "#004f54",
+                      "outline": "#849495",
+                      "surface-container-low": "#171b26",
+                      "background": "#0f131d",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-surface": "#dfe2f1",
+                      "on-secondary-fixed-variant": "#004395",
+                      "primary-fixed": "#74f5ff",
+                      "inverse-on-surface": "#2c303b",
+                      "on-primary-fixed": "#002022",
+                      "surface-container-high": "#262a35",
+                      "secondary-container": "#0566d9",
+                      "on-background": "#dfe2f1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "xs": "4px",
+                      "margin-desktop": "32px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "xl": "40px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Geist"
+                      ],
+                      "data-mono-lg": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "headline-sm": [
+                              "Geist"
+                      ],
+                      "label-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "data-mono-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "26px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+            }
+          }
+      }
+    </script>
+<style>
+        body {
+            background-color: #0f131d;
+            color: #dfe2f1;
+            margin: 0;
+            overflow: hidden; /* Prevent body scroll, layout handles it */
+        }
+        
+        .glass-panel {
+            background-color: rgba(23, 27, 38, 0.8); /* surface-container-low/80 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glow-active {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); /* primary-container glow */
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+            border-color: #00dbe7; /* surface-tint */
+        }
+
+        .terminal-text {
+            color: #b9cacb; /* on-surface-variant */
+        }
+        .terminal-prefix-info { color: #00dbe7; } /* primary-fixed-dim */
+        .terminal-prefix-success { color: #74f5ff; } /* primary-fixed */
+        .terminal-prefix-warn { color: #adc6ff; } /* secondary-fixed-dim */
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #313540; /* surface-variant */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a494b; /* outline-variant */
+        }
+    </style>
+</head>
+<body class="font-body-md h-screen w-screen flex flex-col antialiased">
+<!-- TopNavBar -->
+<header class="bg-surface/70 backdrop-blur-xl border-b border-white/10 shadow-sm flex justify-between items-center px-lg py-sm w-full sticky top-0 z-50 h-[64px]">
+<div class="flex items-center gap-md">
+<img alt="SatQuery AI Logo" class="w-8 h-8 rounded-full border border-primary-container/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ1KzTgAPLodPHnjPrSMaWqQNhXfTNXv8Zn7RFs-lV6vD5uRs15wq-q9HXK2IXlFOaj5vn0WVWBI-L_MlMSqGlC191GVNZ57Ey9E7HEB-GBf2ILHWMD-9XATdaFXeEJL0zsgDTlYaDhZZVbsCZQOsi1CzPmHzkb-PiitFE8i4jb4IhV2CThJU6oWfuA2w-dXSDs2a_D7GoiNZJL4xsTMb6e4Hrcy3itSHmphJPXZfgOUoONVH8_S7F">
+<div class="font-headline-md text-headline-md font-bold text-primary-fixed-dim tracking-tight">SatQuery AI</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-variant/50 text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant border border-outline-variant overflow-hidden ml-sm">
+<img class="w-full h-full object-cover" data-alt="A futuristic avatar for a geospatial AI system user, glowing cyan wireframe face on a dark navy background, highly technical and sharp. Modern UI aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBImqmdm-9YpH5b2bqYWQnZHe0gGp-NUAM5siC2tJiqmPcjIJu4egD8QSnmH4SxnubJTucc9ImH6APXWbwLKE4MDcVwqhtVnTSGviupMF2aVGre5OI8uuV2KVwbZOAjl3Bcaom6hZEX8C8-HolhFtP0ifmpU8sw4b7U1dHj_rBVYPOuheU__Zc6U7F4w1xuiRI6rW-geeOZwqyUqFoa51d5r27s6t3otNUvZohA_QbDVnp__WXEf5BS">
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden h-[calc(100vh-64px)]">
+<!-- SideNavBar (Left) -->
+<nav class="bg-surface-container-low/80 backdrop-blur-md border-r border-white/10 shadow-xl flex flex-col z-40 w-[280px] h-full shrink-0">
+<div class="p-lg border-b border-white/10">
+<div class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest mb-md">Mode Selection</div>
+<div class="flex flex-col gap-sm">
+<!-- Tab 1: Single Image -->
+<a href="{{DATA:SCREEN:SCREEN_11}}" class="text-on-surface-variant px-md py-sm flex items-center gap-md rounded-lg hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 cursor-pointer w-full text-left"><span class="material-symbols-outlined text-[20px]">image</span><span class="font-headline-sm text-[14px] font-medium">Single Image</span></a>
+<!-- Tab 2: Change Detection (Active) -->
+<a href="{{DATA:SCREEN:SCREEN_11}}" class="bg-secondary-container/30 text-primary-container border-l-4 border-primary-container px-md py-sm flex items-center gap-md rounded-r-lg active:translate-x-1 transition-transform cursor-pointer w-full text-left"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">compare</span><span class="font-headline-sm text-[14px] font-medium">Change Detection</span></a>
+<!-- Tab 3: Optical + SAR Fusion -->
+<a href="{{DATA:SCREEN:SCREEN_5}}" class="text-on-surface-variant px-md py-sm flex items-center gap-md rounded-lg hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 cursor-pointer w-full text-left"><span class="material-symbols-outlined text-[20px]">layers</span><span class="font-headline-sm text-[14px] font-medium">Scenarios</span></a>
+</div>
+</div>
+<div class="mt-auto p-lg border-t border-white/10">
+<div class="flex flex-col gap-sm">
+<a href="{{DATA:SCREEN:SCREEN_4}}" class="text-on-surface-variant px-md py-sm flex items-center gap-md rounded-lg hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 cursor-pointer w-full text-left"><span class="material-symbols-outlined text-[20px]">history</span><span class="font-label-mono text-label-mono">History</span></a>
+<a href="{{DATA:SCREEN:SCREEN_2}}" class="text-on-surface-variant px-md py-sm flex items-center gap-md rounded-lg hover:bg-surface-variant/50 hover:text-on-surface transition-all active:translate-x-1 cursor-pointer w-full text-left"><span class="material-symbols-outlined text-[20px]">info</span><span class="font-label-mono text-label-mono">About</span></a>
+</div>
+</div>
+</nav>
+<!-- Center Panel (Main Workspace) -->
+<main class="flex-1 flex flex-col relative z-0 overflow-y-auto p-lg gap-lg bg-[#0a0e18]">
+<!-- Header area for main workspace -->
+<div class="flex justify-between items-end mb-sm">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Change Detection Analysis</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Upload two temporal captures of the same region to identify deviations.</p>
+</div>
+<div class="flex gap-sm">
+<span class="px-3 py-1 rounded-full bg-secondary-container/20 border border-secondary-container/50 text-secondary-fixed-dim font-label-mono text-[10px] flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+                        SYSTEM: ONLINE
+                    </span>
+</div>
+</div>
+<!-- Upload Zones Grid -->
+<div class="grid grid-cols-2 gap-lg flex-1 min-h-[400px]">
+<!-- Zone A -->
+<div class="glass-panel rounded-xl flex flex-col overflow-hidden group">
+<div class="px-md py-sm border-b border-white/10 flex justify-between items-center bg-surface-container-high/50">
+<div class="font-label-mono text-label-mono text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary-fixed-dim" data-icon="satellite_alt">satellite_alt</span>
+                            Image A — 2020
+                        </div>
+<button class="text-on-surface-variant hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="flex-1 p-md flex flex-col relative">
+<!-- Image Container (Simulated uploaded image) -->
+<div class="w-full h-full rounded-lg border border-outline-variant/50 overflow-hidden relative group-hover:border-primary-container/30 transition-colors">
+<div class="w-full h-full bg-cover bg-center absolute inset-0" data-alt="A high-resolution satellite optical image of a coastal industrial port from straight above. Year 2020. The water is deep blue, cargo containers are visible but sparse, and several large undeveloped dirt lots are present. Clear day, sharp shadows. Tech-forward color grading with deep blues and stark contrasts." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDCFuG4sPEDF1R1BMUAVMK9zwhl5h92_rhW5TYJH43cpv5r_nzixzLA_v9gyFbr6g0oCD8bHAAc2Ety1oNSpY-VYmqhCkYnQbBwXH46rVyblHB0-NpgNlk458sdcPuC7ICMReoPidshxuITvl5bMgp7jm83j4bM7Pftc3zqkZUVlXMmyzufsa_8SdGSa4coFf23547fG6nt2q5Eqy6BV5z8zL72xz69yOA9l1YjmU2lgVq2-9lbdQmw')"></div>
+<!-- Overlay UI elements on the image -->
+<div class="absolute top-sm right-sm flex gap-2">
+<span class="bg-surface/80 backdrop-blur-sm border border-white/10 px-2 py-1 rounded font-label-mono text-[10px] text-primary-fixed-dim">OPTICAL</span>
+<span class="bg-surface/80 backdrop-blur-sm border border-white/10 px-2 py-1 rounded font-label-mono text-[10px] text-on-surface-variant">0.5m GSD</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Zone B -->
+<div class="glass-panel rounded-xl flex flex-col overflow-hidden group">
+<div class="px-md py-sm border-b border-white/10 flex justify-between items-center bg-surface-container-high/50">
+<div class="font-label-mono text-label-mono text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary-fixed-dim" data-icon="satellite_alt">satellite_alt</span>
+                            Image B — 2024
+                        </div>
+<button class="text-on-surface-variant hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="flex-1 p-md flex flex-col relative">
+<!-- Image Container (Simulated uploaded image) -->
+<div class="w-full h-full rounded-lg border border-outline-variant/50 overflow-hidden relative group-hover:border-secondary-fixed-dim/30 transition-colors">
+<div class="w-full h-full bg-cover bg-center absolute inset-0" data-alt="A high-resolution satellite optical image of a coastal industrial port from straight above. Year 2024. Same location as the 2020 image but showing significant development. Many more cargo containers, new warehouses built on previously empty dirt lots, and a new dock extending into the water. Clear day, sharp shadows. Tech-forward color grading with deep blues and stark contrasts." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzXL9Ul21OAiOy8jijW1207kzDgRCuVETAQeJkE64AgMIFEX8Ez_br7id0s4InUxA04XZ48gQfkIX4cbqFNwF99Z0UjFry7Jei036MZTTtPnXWCTV4k0Eivt-IDvmJjqTMgCySozQ3C1vf3PwvAg-IrVZr7RYMcw3gkYNW1n-uRafQf-u7Y6dL-HcEwdkOD8ykNvGBrZATnKyIjx2LENTgqfYQ0G75E-4YJZn9QCC77Zz1iv9G_BzF')"></div>
+<!-- Overlay UI elements on the image -->
+<div class="absolute top-sm right-sm flex gap-2">
+<span class="bg-surface/80 backdrop-blur-sm border border-white/10 px-2 py-1 rounded font-label-mono text-[10px] text-secondary-fixed-dim">OPTICAL</span>
+<span class="bg-surface/80 backdrop-blur-sm border border-white/10 px-2 py-1 rounded font-label-mono text-[10px] text-on-surface-variant">0.5m GSD</span>
+</div>
+<!-- Simulated AI Highlights (Change detection bounding boxes) -->
+<div class="absolute top-[30%] left-[40%] w-[120px] h-[80px] border-2 border-error border-dashed bg-error/10 rounded-sm">
+<div class="absolute -top-6 left-0 bg-error/90 text-on-error font-label-mono text-[9px] px-1 py-0.5 rounded-sm">NEW_STRUCTURE_84%</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat / Prompt Area -->
+<div class="mt-auto glass-panel rounded-xl p-sm mt-lg flex items-end gap-md shadow-lg border border-primary-container/20">
+<button class="p-3 text-on-surface-variant hover:text-primary-fixed-dim transition-colors rounded-lg hover:bg-surface-variant/50 shrink-0 mb-1">
+<span class="material-symbols-outlined text-[20px]" data-icon="attach_file">attach_file</span>
+</button>
+<div class="flex-1 relative rounded-lg border border-outline-variant/50 focus-within:border-primary-fixed-dim focus-within:glow-active transition-all bg-surface-dim overflow-hidden flex items-center">
+<textarea class="w-full bg-transparent border-none text-on-surface font-body-md placeholder-on-surface-variant/50 focus:ring-0 resize-none py-3 px-4 min-h-[48px] max-h-[120px]" placeholder="Ask a question about your image(s)..." rows="1">Identify new structures built between the two dates and estimate their area.</textarea>
+</div>
+<button class="bg-primary-container/20 hover:bg-primary-container/30 border border-primary-container text-primary-container px-lg py-3 rounded-lg font-data-mono-lg flex items-center gap-sm shrink-0 mb-1 glow-hover transition-all active:scale-95">
+<span class="">Send Query</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="send">send</span>
+</button>
+</div>
+</main>
+<!-- Right Sidebar (Execution Trace) -->
+<aside class="glass-panel border-l border-white/10 w-[320px] h-full shrink-0 flex flex-col z-10 bg-surface-container-low/90">
+<div class="px-md py-sm border-b border-white/10 flex justify-between items-center h-[56px]"><a href="{{DATA:SCREEN:SCREEN_6}}" class="font-label-mono text-label-mono text-on-surface-variant flex items-center gap-2 hover:text-primary-container transition-colors w-full"><span class="material-symbols-outlined text-[16px]">terminal</span>AGENT EXECUTION TRACE<span class="material-symbols-outlined text-[16px] ml-auto">open_in_new</span></a></div>
+<div class="flex-1 overflow-y-auto p-md font-label-mono text-[11px] leading-relaxed flex flex-col gap-sm terminal-text">
+<div class="mb-xs">
+<span class="terminal-prefix-info font-bold">[14:02:41 INFO]</span>
+<span class="text-on-surface"> System initialization complete.</span>
+</div>
+<div class="mb-xs">
+<span class="terminal-prefix-info font-bold">[14:05:12 RECV]</span>
+<span class="text-on-surface"> User prompt received:</span>
+<br>
+<span class="text-on-surface-variant italic pl-2 border-l-2 border-surface-variant ml-1 mt-1 block">"Identify new structures built between the two dates and estimate their area."</span>
+</div>
+<div class="p-sm rounded bg-[#000000]/40 border border-white/5 my-xs">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed-dim animate-ping"></span>
+<span class="text-primary-fixed-dim font-bold">Query Intent Parsing</span>
+</div>
+<div class="pl-4 border-l border-primary-fixed-dim/30 ml-[3px] py-1">
+<div class="">Intent: <span class="text-secondary-fixed-dim">CHANGE_VQA</span></div>
+<div class="">Modality: <span class="text-secondary-fixed-dim">Optical (RGB)</span></div>
+<div class="">Target classes: <span class="text-secondary-fixed-dim">['building', 'structure']</span></div>
+<div class="">Model Selected: <span class="text-primary-container">ChangeFormer + BLIP-2</span></div>
+</div>
+</div>
+<div class="mb-xs">
+<span class="terminal-prefix-warn font-bold">[14:05:15 EXEC]</span>
+<span class="text-on-surface"> Coregistering Image A and Image B...</span>
+</div>
+<div class="mb-xs">
+<span class="terminal-prefix-success font-bold">[14:05:18 OK]</span>
+<span class="text-on-surface"> Coregistration successful. RMSE: 0.4px</span>
+</div>
+<div class="mb-xs">
+<span class="terminal-prefix-warn font-bold">[14:05:19 EXEC]</span>
+<span class="text-on-surface"> Running ChangeFormer segmentation pass...</span>
+</div>
+<div class="p-sm rounded bg-[#000000]/40 border border-white/5 my-xs">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container" data-icon="memory">memory</span>
+<span class="text-primary-container font-bold">Model Inference Complete</span>
+</div>
+<div class="pl-4 py-1">
+<div class="">Detected Changes: <span class="text-on-surface font-bold">3 regions</span></div>
+<div class="">Confidence (Avg): <span class="text-on-surface font-bold">87%</span></div>
+<div class="mt-2"><a href="{{DATA:SCREEN:SCREEN_7}}" class="text-primary-container hover:underline flex items-center gap-1">View Full Report <span class="material-symbols-outlined text-[12px]">arrow_forward</span></a></div></div>
+</div>
+<div class="mb-xs opacity-70">
+<span class="terminal-prefix-warn font-bold">[14:05:22 EXEC]</span>
+<span class="text-on-surface"> Extracting metrics...</span>
+<span class="inline-block w-2 h-4 bg-primary-fixed-dim ml-1 animate-pulse align-middle"></span>
+</div>
+</div>
+</aside>
+</div>
+
+
+</body></html>
