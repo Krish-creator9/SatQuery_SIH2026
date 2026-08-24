@@ -24,7 +24,7 @@ for _dir in [DATA_DIR, SAMPLES_DIR, OUTPUTS_DIR]:
 UPLOAD_DIR = DATA_DIR / "uploads"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 MAX_UPLOAD_SIZE_MB = 500  # Max file size in MB
-ALLOWED_EXTENSIONS = {".tif", ".tiff", ".geotiff", ".png", ".jpg", ".jpeg"}
+ALLOWED_EXTENSIONS = {".tif", ".tiff", ".geotiff", ".png", ".jpg", ".jpeg", ".bmp"}
 
 # === API Settings ===
 API_HOST = os.getenv("SATQUERY_HOST", "0.0.0.0")
