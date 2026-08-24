@@ -26,11 +26,16 @@ class EvidenceType(str, Enum):
 
 class EvidenceItem(BaseModel):
     """A single piece of evidence."""
-    type: EvidenceType
-    name: str
+    type: EvidenceType = Field(default=EvidenceType.TEXTUAL)
+    name: str = Field(default="Evidence Item")
     value: Any = None
     interpretation: str = ""
     path: Optional[str] = None  # Path to visual evidence file
+    source: Optional[str] = None
+    verdict: Optional[str] = None
+    detail: Optional[str] = None
+    data: Optional[dict[str, Any]] = None
+    visual_asset: Optional[str] = None
 
 
 class AnalysisStatus(str, Enum):

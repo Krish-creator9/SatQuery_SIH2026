@@ -74,11 +74,12 @@ app.mount("/static/outputs", StaticFiles(directory=str(OUTPUTS_DIR)), name="outp
 
 
 # === Register Routers ===
-from backend.routers import upload, query, results
+from backend.routers import upload, query, results, scenarios
 
 app.include_router(upload.router, prefix=API_PREFIX)
 app.include_router(query.router, prefix=API_PREFIX)
 app.include_router(results.router, prefix=API_PREFIX)
+app.include_router(scenarios.router, prefix=API_PREFIX)
 
 
 # === Root Endpoints ===
