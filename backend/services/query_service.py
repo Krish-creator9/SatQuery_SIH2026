@@ -31,12 +31,9 @@ class QueryService:
     def __init__(self):
         self._step_counter = 0
 
-    async def process(self, query: str, session_id: str | None = None) -> FusedResult:
+    async def process(self, query: str, session_id: str | None = None, mode: str = "change") -> FusedResult:
         """
         Run the full pipeline for a given query.
-
-        Phase 1: Returns stub result with execution trace.
-        Future: Connects all modules.
         """
         self._step_counter = 0
         start_time = time.time()

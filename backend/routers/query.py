@@ -26,7 +26,7 @@ async def process_query(request: QueryRequest):
     try:
         from backend.services.query_service import QueryService
         service = QueryService()
-        result = await service.process(query=request.query, session_id=request.session_id)
+        result = await service.process(query=request.query, session_id=request.session_id, mode=request.mode or "change")
         return result
     except Exception as e:
         import logging

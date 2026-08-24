@@ -1,18 +1,13 @@
 /**
  * SatQuery AI — API Service Layer
  *
- * All communication with the FastAPI backend goes through here.
+ * Handles communication with the FastAPI backend.
  */
 
 const API_BASE = '/api';
 
 /**
  * Upload an image file.
- * @param {File} file - The image file to upload
- * @param {string} imageType - "optical", "sar", "multispectral", "unknown"
- * @param {string} role - "primary", "secondary", "before", "after"
- * @param {string|null} sessionId - Existing session ID (null to create new)
- * @returns {Promise<object>} Upload response with session_id, image_id, metadata
  */
 export async function uploadImage(file, imageType = 'unknown', role = 'primary', sessionId = null) {
   const formData = new FormData();
@@ -38,15 +33,12 @@ export async function uploadImage(file, imageType = 'unknown', role = 'primary',
 
 /**
  * Send a natural-language query for analysis.
- * @param {string} query - The user's question
- * @param {string|null} sessionId - Session with uploaded images
- * @returns {Promise<object>} FusedResult with answer, confidence, evidence, trace
  */
-export async function sendQuery(query, sessionId = null) {
+export async function sendQuery(query, sessionId = null, mode = 'change') {
   const response = await fetch(`${API_BASE}/query/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query, session_id: sessionId }),
+    body: JSON.stringify({ query, session_id: sessionId, mode }),
   });
 
   if (!response.ok) {
@@ -59,7 +51,6 @@ export async function sendQuery(query, sessionId = null) {
 
 /**
  * Check backend health and feature status.
- * @returns {Promise<object>} Health status
  */
 export async function getHealth() {
   const response = await fetch(`${API_BASE}/health`);
@@ -69,7 +60,6 @@ export async function getHealth() {
 
 /**
  * Get detailed system status including module availability.
- * @returns {Promise<object>} System status
  */
 export async function getSystemStatus() {
   const response = await fetch(`${API_BASE}/status`);
@@ -78,8 +68,7 @@ export async function getSystemStatus() {
 }
 
 /**
- * Get list of supported task types.
- * @returns {Promise<object>} Available tasks
+ * Get supported tasks and scenarios.
  */
 export async function getSupportedTasks() {
   const response = await fetch(`${API_BASE}/query/tasks`);

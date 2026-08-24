@@ -41,6 +41,7 @@ class QueryRequest(BaseModel):
     """Incoming user query."""
     query: str = Field(..., min_length=1, max_length=2000, description="Natural language query")
     session_id: Optional[str] = Field(default=None, description="Session ID for image context")
+    mode: Optional[str] = Field(default="change", description="Analysis mode: single, change, fusion, scenarios")
 
 
 class ImageReference(BaseModel):
